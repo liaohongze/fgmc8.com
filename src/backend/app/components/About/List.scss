@@ -1,0 +1,20 @@
+.about-list {
+  color: #000;
+  margin-top: 15px;
+  td {
+    a {
+      padding: 0;
+    }
+    span {
+      margin-right: 10px;
+    }
+  }
+  .editToggle-btn {
+    color: #3399CC;
+    cursor: pointer;
+  }
+  .delete {
+    color: #CF4646;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,67 @@
+.menu-group {
+    .menu-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        cursor: pointer;
+        .title {
+            .glyphicon {
+                margin-right: 10px;
+            }
+        }
+        .menu-pointer {
+            font-size: 0.8rem;
+        }
+    }
+    .menu-title > ul {
+        a {
+            color: #a5afbb
+        }
+    }
+    ul.wrapper-ul {
+        margin-bottom: 0;
+    }
+    .hidden-ul {
+        display: none;
+    }
+    .onActive {
+        background-color: #2C323A;
+        color: #D9DDE1;
+    }
+}
+
+.close-menu-group {
+    position: relative;
+    .menu-title {
+        justify-content: center;
+        padding: 10px 5px;
+        font-size: 1.5rem;
+    }
+}
+
+.close-menu-group:hover>ul {
+    display: block;
+    width: 120px;
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 50px;
+    background-color: #fff;
+    li {
+        padding: 5px 10px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .menu-group {
+        .menu-title {
+            padding-right: 5px;
+            .title {
+                .glyphicon {
+                    margin-right: 2px;
+                }
+            }
+        }
+    }
+}

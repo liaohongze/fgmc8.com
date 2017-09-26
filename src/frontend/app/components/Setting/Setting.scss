@@ -1,0 +1,37 @@
+.setting {
+  .setting-content {
+    border-top: 0;
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      padding: 10px 20px;
+      margin-bottom: 15px;
+      span:last-child {
+        color: #757575;
+        font-size: 14px;
+      }
+    }
+    .setting-item:first-child {
+      span:last-child {
+        font-size: 18px;
+      }
+    }
+    .submit-btn {
+        margin: 15px;
+        a {
+            display: block;
+            text-align: center;
+            width: 100%;
+            background: #F44336;
+            color: #fff;
+            font-size: 14px;
+            border: 0;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-radius: 3px;
+        }
+    }
+  }
+}

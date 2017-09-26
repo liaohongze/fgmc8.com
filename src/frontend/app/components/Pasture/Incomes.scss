@@ -1,0 +1,28 @@
+.incomes {
+  .incomes-content {
+    border-top: 0;
+    .friend-item {
+      border: 1px solid #eee;
+      border-radius: 5px;
+      margin: 0 10px 10px;
+      padding: 8px;
+      .friend-item-row {
+        font-size: 0;
+        .firend-col {
+          font-size: 16px;
+          display: inline-block;
+          padding: 5px;
+          box-sizing: border-box;
+        }
+        .firend-col-5 {
+          width: 50%;
+          border-right: 1px solid #eee;
+          text-align: center;
+        }
+        .firend-col-5:last-child {
+          border-right: 0;
+        }
+      }
+    }
+  }
+}

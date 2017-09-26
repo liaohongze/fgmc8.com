@@ -1,0 +1,19 @@
+.record-item {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+    .profit {
+        text-align: right;
+        color: #757575;
+    }
+    .data-time {
+        color: #757575;
+    }
+}
+
+.record-item:last-child {
+    border-bottom: 1px solid transparent;
+}

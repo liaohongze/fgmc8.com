@@ -1,0 +1,101 @@
+@import 'animate';
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    background-color: #f1f1f1;
+    max-width: 640px;
+    min-width: 320px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#root>div>span {
+    display: block;
+    height: 100%;
+}
+
+#root,
+#root>div,
+#root>div>span>div {
+    height: 100%;
+    width: 100%;
+}
+
+#root>div>span {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+a {
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+a:link,
+a:visited {
+    text-decoration: none;
+    color: #333;
+}
+
+// 有返回、标题的页面
+.toolbar-page {
+    height: 100%;
+    position: relative;
+    background-color: #fff;
+    overflow: hidden;
+    overflow-y: scroll;
+    .toolbar-page-content {
+        margin-top: 76px;
+        border-top: 1px solid #eee;
+    }
+}
+
+// 加载
+.loading {
+    text-align: center;
+    color: #8bc34a;
+}
+
+// input验证
+.input-wrapper {
+    border-bottom: 1px solid #eee;
+}
+.validata-error {
+    border-bottom: 1px solid #F44336;
+}
+.validata-info {
+    margin-left: 15px;
+    color: #F44336;
+    font-size: 14px;
+}
+
+// weui的样式调整
+.weui-toast {
+    .weui-icon_toast {
+        margin-bottom: 10px;
+    }
+    .weui-icon-warn {
+        font-size: 43px;
+    }
+}
+
+.weui-dialog {
+    .weui-dialog__ft {
+        .weui-dialog__btn_default {
+            color: #000;
+        }
+        .weui-dialog__btn_primary {
+            color: #0bb20c;
+        }
+    }
+}

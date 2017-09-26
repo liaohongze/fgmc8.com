@@ -1,0 +1,23 @@
+.sidebar {
+    width: 200px;
+    background-color: #353D46;
+    color: #a5afbb;
+    height: 100%;
+    transition: width 0.5s;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.small-sidebar {
+    width: 50px;
+}
+
+@media screen and (max-width: 500px) {
+    .sidebar {
+        width: 0;
+        transition: width .3s;
+    }
+    .moblie-sidebar {
+        width: 130px;
+    }
+}

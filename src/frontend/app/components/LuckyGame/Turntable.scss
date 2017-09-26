@@ -1,0 +1,102 @@
+.turntable {
+  background: url('./img/activity-lottery-bg.png') no-repeat top center;
+  background-color: #2B8B03;
+  height: 100%;
+  overflow: auto;
+  .outercont {
+    position: relative;
+    overflow: hidden;
+    transition: height .5s;
+    .outer-cont {
+      display: flex;
+      .outer {
+        margin: 20px auto 0;
+        img {
+          width: 310px;
+        }
+      }
+    }
+    .inner-cont {
+      display: flex;
+      position: absolute;
+      top: 90px;
+      width: 100%;
+      .inner {
+        cursor: pointer;
+        margin: 0 auto;
+        background-color: transparent;
+        border: 0;
+      }
+      .inner:hover {
+        border: 0;
+      }
+      .inner:focus {
+        outline: none;
+      }
+    }
+  }
+  .boxyellow {
+    background-color: #FEF8B2;
+  }
+  .boxcontent {
+    margin: 1px 15px 15px 15px;
+    border-radius: 5px;
+    padding: 2px;
+    background-color: #FEF8B2;
+    -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+    -o-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+    .box {
+      border-radius: 5px;
+      font-size: 14px;
+      border: 1px dashed rgba(0, 0, 0, 0.3);
+      center {
+        display: block;
+        text-align: center;
+        a {
+          display: block;
+          padding: 0;
+          width: 100%;
+        }
+      }
+      .title-orange {
+        padding: 0 5px 0px 10px;
+        background: url('./img/title-bg-orange.png') no-repeat 0 0;
+        border-radius: 3px 3px 3px 0;
+        color: #ffffff;
+        height: 22px;
+        margin: -1px;
+      }
+      .title-green {
+        padding: 0 5px 0px 10px;
+        background: url('./img/title-bg-green.png') no-repeat 0 0;
+        border-radius: 3px 3px 3px 0;
+        color: #ffffff;
+        height: 22px;
+        margin: -1px;
+      }
+      .detail {
+        padding: 15px;
+        color: #444;
+        .red {
+          color: red;
+        }
+        .play-again {
+          cursor: pointer;
+          margin-top: 15px;
+          padding: 5px 15px;
+          font-size: 18px;
+          border-radius: 8px;
+          border: 0;
+          background-color: #FF6501;
+          color: #fff;
+          font-family: 'YouYuan'
+        }
+      }
+    }
+  }
+  .boxcontent:first-child {
+    margin-top: 15px;
+  }
+}

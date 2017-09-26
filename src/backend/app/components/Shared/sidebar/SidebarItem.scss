@@ -1,0 +1,19 @@
+.menu-item:hover {
+    background-color: #2C323A;
+}
+
+.menu-item {
+    text-align: center;
+    padding: 5px 15px 5px 5px;
+    background-color: #38404A;
+    color: #a5afbb;
+    list-style-type:none;
+}
+
+.item-active {
+    background-color: #2C323A;
+    color: #D9DDE1;
+}
+a.sidebar-item-a {
+    padding: 0;
+}

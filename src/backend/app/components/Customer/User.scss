@@ -1,0 +1,33 @@
+.user {
+  color: #000;
+  margin-top: 15px;
+  td {
+    a {
+      padding: 0;
+    }
+    span {
+      margin-right: 10px;
+    }
+  }
+  .withdrawal-direct-btn,
+  .withdrawal-incom-btn {
+    color: #337ab7;
+  }
+  .user-name-btn {
+    color: #3399CC;
+  }
+  .editToggle-btn,
+  .lock-btn {
+    color: #3399CC;
+    cursor: pointer;
+  }
+  .delete,
+  .unlock-btn {
+    color: #CF4646;
+    cursor: pointer;
+  }
+  .changepwd-btn {
+    color: #0f9932;
+    cursor: pointer;
+  }
+}

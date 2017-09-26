@@ -1,0 +1,80 @@
+@import 'animate';
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    background-color: #f1f1f1;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#root,
+#root>div,
+#root>div>div {
+    height: 100%;
+    width: 100%;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+a {
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+a:link,
+a:visited {
+    text-decoration: none;
+    color: #333;
+}
+
+.loading,
+.no-result {
+    text-align: center;
+    color: #bce8f1;
+}
+
+.search-bar {
+    text-align: right;
+    margin-bottom: 15px;
+    button {
+        margin-left: 5px;
+    }
+}
+
+.panel {
+    .panel-heading {
+        .panel-title {
+            a {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.pagination-wrapper {
+    text-align: center;
+    .pagination {
+        margin-bottom: 0;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .panel-body {
+        padding: 0;
+        padding-bottom: 10px;
+    }
+    .search-bar {
+        display: flex;
+        .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+    }
+}

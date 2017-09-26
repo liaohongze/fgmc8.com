@@ -1,0 +1,33 @@
+.toolbar {
+    background-color: #8bc34a;
+    display: flex;
+    height: 56px;
+    font-size: 20px;
+    color: #fff;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    max-width: 620px;
+    min-width: 320px;
+    .left-side {
+      display: flex;
+    }
+    .back {
+        display: flex;
+        align-items: center;
+        color: #fff;
+        margin-left: 10px;
+        margin-right: 20px;
+        font-size: 14px;
+        font-weight: 100;
+        line-height: 25px;
+    }
+    .action {
+        display: block;
+        color: #fff;
+        margin-left: 10px;
+        margin-right: 20px;
+    }
+}

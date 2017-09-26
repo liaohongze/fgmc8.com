@@ -1,0 +1,44 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "impliedStrict": true,
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": [
+    "standard",
+    "standard-react"
+  ],
+  "plugins": [
+    "babel",
+    "react",
+    "promise"
+  ],
+  "globals": {
+    "__DEV__": false,
+    "__PROD__": false,
+    "__DEBUG__": false
+  },
+  "rules": {
+    "eol-last": 0,
+    "no-console": 0,
+    "no-debugger": 0,
+    "space-before-function-paren": 0,
+    "no-mixed-spaces-and-tabs": 2,
+    "jsx-quotes": 1,
+    "react/jsx-boolean-value": 0,
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/react-in-jsx-scope": 2
+  }
+}

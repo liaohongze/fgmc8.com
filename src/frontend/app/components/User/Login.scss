@@ -1,0 +1,57 @@
+.login {
+  height: 100%;
+  background: url('./img/login.jpg') no-repeat;
+  background-size: 100%;
+  overflow: auto;
+  .form-wrapper {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60%;
+    .rowself {
+      font-size: 0;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      .col-3 {
+        width: 30%;
+        text-align: right;
+        img {
+          width: 100%;
+        }
+      }
+      .col-7 {
+        width: 70%;
+        font-size: 1rem;
+        padding-left: 15px;
+        input {
+          border: 1px solid #0F9CD6;
+          padding: 4px;
+          height: 25px;
+          width: 90%;
+          font-size: 16px;
+          background-color: transparent;
+        }
+        input:focus{
+          outline-color: #0F9CD6;
+        }
+      }
+    }
+    .error-info {
+      height: 44px;
+      .col-7 {
+        overflow: hidden;
+        font-size: 14px;
+        color: #F44336;
+        transition: height .3s;
+      }
+    }
+    .login-btn {
+      text-align: center;
+      margin-top: 10%;
+      img {
+        cursor: pointer;
+      }
+    }
+  }
+}

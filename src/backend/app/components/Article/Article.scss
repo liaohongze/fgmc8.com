@@ -1,0 +1,26 @@
+.article {
+  color: #000;
+  margin-top: 15px;
+  .editToggle {
+    color: #3399CC;
+    cursor: pointer;
+  }
+  .delete {
+    margin-left: 10px;
+    color: #CF4646;
+    cursor: pointer;
+  }
+  .btn-wrapper {
+    padding-left: 5px;
+    button {
+      margin-right: 10px;
+    }
+  }
+  // 编辑
+  .row {
+    margin-bottom: 15px;
+    .control-label {
+      text-align: right;
+    }
+  }
+}

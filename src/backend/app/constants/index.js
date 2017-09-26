@@ -1,0 +1,22 @@
+// animate
+export const CURRENT_ANIMATE = 'CURRENT_ANIMATE'
+
+// sign up
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST'
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
+export const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
+
+// login
+export const LOGIN_REQUEST = 'LOGIN_REQUEST'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+
+// logout
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
+
+// orders
+export const ORDERS_REQUEST = 'ORDERS_REQUEST'
+export const ORDERS_SUCCESS = 'ORDERS_SUCCESS'
+export const ORDERS_FAILURE = 'ORDERS_FAILURE'

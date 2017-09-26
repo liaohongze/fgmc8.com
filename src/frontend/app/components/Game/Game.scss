@@ -1,0 +1,256 @@
+.game {
+  width: 100%;
+  height: 100%;
+  background: url('./img/bg.png') no-repeat;
+  background-color: #000;
+  background-size: 100% auto;
+  position: relative;
+  .userinfo {
+    width: 233px;
+    padding: 5px;
+    background: url('./img/userinfo.png') no-repeat;
+    font-size: 12px;
+    z-index: 2;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: .9;
+    box-sizing: border-box;
+    .upper-part {
+      display: flex;
+      .avatar {
+        width: 65px;
+        height: 70px;
+        overflow: hidden;
+        img {
+          width: 55px;
+          height: 55px;
+          margin-top: 15px;
+          margin-left: 1px;
+        }
+      }
+      .userinfo-text {
+        overflow: hidden;
+        flex: 1;
+        .user-account {
+          color: black;
+          font-weight: bolder;
+          font-style: italic;
+          margin-top: 15px;
+          margin-bottom: 5px;
+        }
+        .game-data {
+          padding-left: 10px;
+          text-shadow: #000 1px 0 0, #000 0 1px 0, #000 -1px 0 0, #000 0 -1px 0;
+          div {
+            line-height: 14px;
+          }
+        }
+      }
+    }
+    .down-part {
+      p {
+        margin-top: 10px;
+        text-align: center;
+        background-color: #333;
+        border-radius: 5px;
+        opacity: .7;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        color: #fff;
+      }
+    }
+  }
+  .level {
+    text-align: right;
+    padding-right: 6px;
+    position: relative;
+    font-size: 0;
+    >img {
+      height: 100%;
+    }
+    .wheel {
+      display: block;
+      position: absolute;
+      width: 13%;
+      top: -24%;
+      left: 18%;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .game-pasture {
+    position: absolute;
+    width: 100%;
+    ul {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      li {
+        position: absolute;
+        width: 20%;
+        height: 18%;
+        list-style-type:none;
+        .cow {
+          width: 57px;
+          height: 35px;
+          margin: 0 auto;
+          background: url('./img/niu1.png');
+          animation: playcow 5s steps(21) infinite;
+          }
+          @keyframes playcow {
+            0% { background-position: 0; }
+            100% { background-position: -1197px; }
+        }
+      }
+      .land1 {
+        background: transparent url('./img/td01.png') no-repeat scroll left top;
+        background-size: cover;
+      }
+      .land2 {
+        background: transparent url('./img/td02.png') no-repeat scroll left top;
+        background-size: cover;
+      }
+      .countdown {
+        display: block;
+        position: absolute;
+        color: #fff;
+        text-align: center;
+        top: -20px;
+        left: 0;
+        right: 0;
+        font-weight: 600;
+        -webkit-text-stroke: 0.5px #E27C28;
+        font-size: 14px;
+      }
+      .clkdiv {
+        width: 170%;
+        height: 94%;
+        position: absolute;
+        top: 60%;
+        left: -92%;
+        border-bottom-left-radius: 50px;
+        z-index: 100;
+        transform: rotate(-32deg)
+      }
+    }
+    .back-home {
+      display: block;
+      height: 60px;
+      position: absolute;
+      top: -23%;
+      z-index: 1000;
+      img {
+        height: 100%;
+      }
+    }
+  }
+  .operation {
+    background: url('./img/bottommenu.png') bottom no-repeat;
+    width: 100%;
+    height: 145px;
+    position: absolute;
+    bottom: 0;
+    overflow: hidden;
+    .item-list-bar-wrapper {
+      width: 100%;
+      height: 60px;
+    }
+    .item-list-bar {
+      height: 100%;
+      width: 100%;
+      padding-left: 8px;
+      display: flex;
+      overflow: hidden;
+      box-sizing: border-box;
+      opacity: .9;
+      .prev{
+        width: 23px;
+        background: url('./img/left_02.png');
+        margin-top: 3px;
+      }
+      .next{
+        width: 23px;
+        background: url('./img/right_02.png');
+        margin-top: 3px;
+      }
+      .content-box {
+        width: 250px;
+        border: 1px solid #fff;
+        background: #a46126;
+        padding: 4px;
+        img {
+          background-color: #fff;
+        }
+      }
+    }
+    .item-list-bar>div {
+      height: 100%;
+      box-sizing: border-box;
+    }
+    .item-wrapper {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      .operation-item {
+        padding: 0;
+        text-align: center;
+        cursor: pointer;
+        img {
+          transition: width 0.3s, height 0.3s;
+        }
+        span {
+          font-size: 14px;
+          color: #fff;
+          text-shadow: #000 1px 0 0, #000 0 1px 0, #000 -1px 0 0, #000 0 -1px 0;
+        }
+      }
+    }
+  }
+  .weui-dialog__btn_primary {
+    color: #0bb20c;
+  }
+  .dialog-opened {
+    .weui-dialog__btn {
+      color: #0bb20c;
+    }
+  }
+}
+
+.shovel-cursor {
+  cursor: url('../../assets/shovel.ico'),auto
+}
+
+.hand-cursor {
+  cursor: url('../../assets/hand.ico'),auto
+}
+
+.thumb-cursor {
+  cursor: url('../../assets/thumb.ico'),auto
+}
+
+@media screen and (max-width: 375px) {
+  .game .game-pasture ul li .cow {
+    position: absolute;
+    top: -10px;
+    left: 5px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .game .game-pasture ul li .cow {
+    top: -13px;
+  }
+  .game .game-pasture ul .countdown {
+    font-size: 10px;
+  }
+  .game .level .wheel {
+    top: -15%;
+  }
+}
