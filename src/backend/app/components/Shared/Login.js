@@ -46,9 +46,9 @@ export default class Login extends Component {
       const values = { 'username': userName, 'password': password }
       auth.authenticate(values, (result) => {
         if (result) {
-          this.setState({ redirectToReferrer: result })
+          if (this.refs.loginBox) { this.setState({ redirectToReferrer: result }) }
         } else {
-          this.setState({ loginFault: true })
+          if (this.refs.loginBox) { this.setState({ loginFault: true }) }
         }
       })
     }
@@ -76,7 +76,7 @@ export default class Login extends Component {
       )
     }
     return (
-      <div className='login-bg'>
+      <div className='login-bg' ref='loginBox'>
         <div className='login-panel'>
           <h2 className='logo'>管理系统</h2>
           <form onSubmit={this.handleSubmit}>

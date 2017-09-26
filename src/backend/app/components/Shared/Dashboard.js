@@ -194,7 +194,7 @@ export default class Dashboard extends Component {
             {
               menuGroup.map((menu) => {
                 return (
-                  <MenuGroup title={menu.title} SidebarMenuKey={menu.sidebarMenuKey} key={menu.sidebarMenuKey} icon={menu.icon}>
+                  <MenuGroup title={menu.title} SidebarMenuKey={menu.sidebarMenuKey} key={menu.sidebarMenuKey} icon={menu.icon} subMenuNum={menu.sidebarItem.length}>
                     {
                       menu.sidebarItem.map((item) => {
                         return (<SidebarItem key={item.SidebarItemKey} value={item.value} SidebarItemKey={item.SidebarItemKey} url={item.url} />)

@@ -23,7 +23,7 @@ export default class List extends Component {
   refleshData = (page, size) => {
     this.setState({ loading: true })
     Client.getRecharges(page, size, result => {
-      if (!result.errored) {
+      if (!result.errored && this.refs.rechargeList) {
         this.setState({
           loading: false,
           rechargeData: result.object.list,
@@ -33,10 +33,6 @@ export default class List extends Component {
     })
   }
 
-  componentDidMount() {
-    this.refleshData(this.state.activePage, this.state.pageSize)
-  }
-
   handleSelect = (eventKey) => {
     this.setState({
       activePage: eventKey
@@ -44,12 +40,16 @@ export default class List extends Component {
     this.refleshData(eventKey, this.state.pageSize)
   }
 
+  componentDidMount() {
+    this.refleshData(this.state.activePage, this.state.pageSize)
+  }
+
   render() {
     const { loading, rechargeData, activePage, totalPage } = this.state
     const { match } = this.props
 
     return (
-      <div className='recharge-list'>
+      <div className='recharge-list' ref='rechargeList'>
         <Form inline className='search-bar'>
           <FormGroup>
             <FormControl type='text' placeholder='搜索记录' />

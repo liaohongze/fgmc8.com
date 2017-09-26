@@ -10,6 +10,8 @@
 
 .small-sidebar {
     width: 50px;
+    overflow-x: visible;
+    overflow-y: visible;
 }
 
 @media screen and (max-width: 500px) {

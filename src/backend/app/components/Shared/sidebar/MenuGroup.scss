@@ -1,4 +1,5 @@
 .menu-group {
+    width: 200px;
     .menu-title {
         display: flex;
         justify-content: space-between;
@@ -21,10 +22,12 @@
     }
     ul.wrapper-ul {
         margin-bottom: 0;
+        overflow: hidden;
+        transition: height .3s;
     }
-    .hidden-ul {
-        display: none;
-    }
+    // .hidden-ul {
+    //     display: none;
+    // }
     .onActive {
         background-color: #2C323A;
         color: #D9DDE1;
@@ -32,11 +35,15 @@
 }
 
 .close-menu-group {
+    width: 50px;
     position: relative;
     .menu-title {
         justify-content: center;
         padding: 10px 5px;
         font-size: 1.5rem;
+    }
+    >ul {
+        display: none;
     }
 }
 
@@ -55,6 +62,7 @@
 
 @media screen and (max-width: 500px) {
     .menu-group {
+        width: 130px;
         .menu-title {
             padding-right: 5px;
             .title {

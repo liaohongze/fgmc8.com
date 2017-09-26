@@ -19,7 +19,7 @@ export default class List extends Component {
   refreshData = () => {
     this.setState({ loading: true })
     Client.getPrizes(result => {
-      if (!result.errored) {
+      if (!result.errored && this.refs.turntableList) {
         this.setState({
           loading: false,
           data: result.object
@@ -28,13 +28,9 @@ export default class List extends Component {
     })
   }
 
-  componentDidMount() {
-    this.refreshData()
-  }
-
   deletePrize = (id) => {
     Client.deletePrize(id, result => {
-      if (!result.errored) {
+      if (!result.errored && this.refs.turntableList) {
         this.setState(prevState => {
           return { data: prevState.data.filter(item => item.id !== id) }
         })
@@ -46,10 +42,14 @@ export default class List extends Component {
     return <ListItem key={index} prize={item} delete={this.deletePrize} itemMatch={this.props.match} />
   }
 
+  componentDidMount() {
+    this.refreshData()
+  }
+
   render() {
     const { loading, data } = this.state
     return (
-      <div className='turntable-list'>
+      <div className='turntable-list' ref='turntableList'>
         <Panel collapsible defaultExpanded header='转盘奖品' bsStyle='info'>
           {
             loading

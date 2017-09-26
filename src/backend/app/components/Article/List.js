@@ -13,7 +13,7 @@ export default class Article extends Component {
 
   state = {
     loading: false,
-    data: [],
+    articles: [],
     totalPage: 1,
     activePage: 1,
     pageSize: 10
@@ -26,10 +26,10 @@ export default class Article extends Component {
   refleshData = (page, size) => {
     this.setState({ loading: true })
     Client.getArticles(page, size, result => {
-      if (!result.errored) {
+      if (!result.errored && this.refs.articleBox) {
         this.setState({
           loading: false,
-          data: result.object.list,
+          articles: result.object.list,
           totalPage: Math.ceil(result.object.total / this.state.pageSize)
         })
       }
@@ -38,10 +38,10 @@ export default class Article extends Component {
 
   deleteArticle = (id) => {
     Client.deleteArticle(id, result => {
-      if (!result.errored) {
+      if (!result.errored && this.refs.articleBox) {
         this.setState(prevState => {
           return {
-            data: prevState.data.filter(item => item.id !== id)
+            articles: prevState.articles.filter(item => item.id !== id)
           }
         })
       }
@@ -60,15 +60,15 @@ export default class Article extends Component {
   }
 
   render() {
-    const { loading, data, activePage, totalPage } = this.state
+    const { loading, articles, activePage, totalPage } = this.state
     return (
-      <div className='article'>
+      <div className='article' ref='articleBox'>
         <Panel collapsible defaultExpanded header='通知列表' bsStyle='info'>
           {
             loading
               ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='2x' /></div>
               : (
-                data.length === 0
+                articles.length === 0
                   ? <div className='no-result'>暂无数据</div>
                   : (
                     <Table responsive>
@@ -81,7 +81,7 @@ export default class Article extends Component {
                       </thead>
                       <tbody>
                         {
-                          data.map(this.renderArticle)
+                          articles.map(this.renderArticle)
                         }
                       </tbody>
                     </Table>

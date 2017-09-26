@@ -23,7 +23,7 @@ export default class List extends Component {
   refleshData = (page, size) => {
     this.setState({ loading: true })
     Client.getTransactions(page, size, result => {
-      if (!result.errored) {
+      if (!result.errored && this.refs.transactionsList) {
         this.setState({
           loading: false,
           data: result.object.list,
@@ -33,10 +33,6 @@ export default class List extends Component {
     })
   }
 
-  componentDidMount() {
-    this.refleshData(this.state.activePage, this.state.pageSize)
-  }
-
   handleSelect = (eventKey) => {
     this.setState({
       activePage: eventKey
@@ -44,11 +40,15 @@ export default class List extends Component {
     this.refleshData(eventKey, this.state.pageSize)
   }
 
+  componentDidMount() {
+    this.refleshData(this.state.activePage, this.state.pageSize)
+  }
+
   render() {
     const { loading, data, activePage, totalPage } = this.state
 
     return (
-      <div className='transactions-list'>
+      <div className='transactions-list' ref='transactionsList'>
         <Form inline className='search-bar'>
           <FormGroup>
             <FormControl type='text' placeholder='搜索交易' />

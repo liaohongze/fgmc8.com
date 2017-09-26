@@ -16,16 +16,16 @@ export default class List extends Component {
     activePage: 1,
     pageSize: 10,
     loading: false,
-    data: []
+    abouts: []
   }
 
   refreshData = (page, size) => {
     this.setState({ loading: true })
     Client.getAbouts(page, size, result => {
-      if (!result.errored) {
+      if (!result.errored && this.refs.aboutsBox) {
         this.setState({
           loading: false,
-          data: result.object.list,
+          abouts: result.object.list,
           totalPage: Math.ceil(result.object.total / this.state.pageSize)
         })
       }
@@ -38,10 +38,10 @@ export default class List extends Component {
 
   deleteAbout = (id) => {
     Client.deleteAbout(id, result => {
-      if (!result.errored) {
+      if (!result.errored && this.refs.aboutsBox) {
         this.setState(prevState => {
           return {
-            data: prevState.data.filter(item => item.id !== id)
+            abouts: prevState.abouts.filter(item => item.id !== id)
           }
         })
       }
@@ -60,15 +60,15 @@ export default class List extends Component {
   }
 
   render() {
-    const { loading, data, activePage, totalPage } = this.state
+    const { loading, abouts, activePage, totalPage } = this.state
     return (
-      <div className='about-list'>
+      <div className='about-list' ref='aboutsBox'>
         <Panel collapsible defaultExpanded header='信息列表' bsStyle='info'>
           {
             loading
               ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='2x' /></div>
               : (
-                data.length === 0
+                abouts.length === 0
                   ? <div className='no-result'>暂无数据</div>
                   : (
                     <Table responsive>
@@ -82,7 +82,7 @@ export default class List extends Component {
                       </thead>
                       <tbody>
                         {
-                          data.map(this.renderAbout)
+                          abouts.map(this.renderAbout)
                         }
                       </tbody>
                     </Table>

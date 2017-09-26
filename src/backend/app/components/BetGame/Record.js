@@ -21,7 +21,7 @@ export default class Record extends Component {
   refreshData = (page, size) => {
     this.setState({ loading: true })
     Client.getWillageWithIdles(page, size, result => {
-      if (!result.errored) {
+      if (!result.errored && this.refs.betRecord) {
         this.setState({
           loading: false,
           totalPage: Math.ceil(result.object.total / size),
@@ -31,10 +31,6 @@ export default class Record extends Component {
     })
   }
 
-  componentDidMount() {
-    this.refreshData(this.state.activePage, this.state.pageSize)
-  }
-
   handleSelect = (eventKey) => {
     this.setState({
       activePage: eventKey
@@ -42,10 +38,14 @@ export default class Record extends Component {
     this.refreshData(eventKey, this.state.pageSize)
   }
 
+  componentDidMount() {
+    this.refreshData(this.state.activePage, this.state.pageSize)
+  }
+
   render() {
     const { loading, recordData, totalPage, activePage } = this.state
     return (
-      <div className='withdrawal-record'>
+      <div className='bet-record withdraw-record' ref='betRecord'>
         <Panel collapsible defaultExpanded header='庄和闲记录' bsStyle='info'>
           {
             loading
@@ -57,8 +57,11 @@ export default class Record extends Component {
                     <Table responsive>
                       <thead>
                         <tr>
-                          <th>下注</th>
+                          <th>期数</th>
+                          <th>押注</th>
+                          <th>开奖</th>
                           <th>赔率</th>
+                          <th>下注金额</th>
                           <th>积分变动</th>
                           <th>日期</th>
                         </tr>
@@ -68,9 +71,12 @@ export default class Record extends Component {
                           recordData.map((item, index) => {
                             return (
                               <tr key={index}>
-                                <td>{item.name}</td>
+                                <td>{item.pn}</td>
+                                <td>{item.betName}</td>
+                                <td>{item.openName}</td>
                                 <td>{item.odds}</td>
                                 <td>{item.amount}</td>
+                                <td>{item.income}</td>
                                 <td>{formatDate(item.created, 'YYYY-MM-DD HH:mm:ss')}</td>
                               </tr>
                             )

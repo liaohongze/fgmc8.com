@@ -15,7 +15,8 @@ export default class MenuGroup extends Component {
     handleMenuBgColor: PropTypes.func,
     itemCloseMobileSidebar: PropTypes.func,
     icon: PropTypes.string,
-    isOpen: PropTypes.bool
+    isOpen: PropTypes.bool,
+    subMenuNum: PropTypes.number
   }
 
   handleMenuClick = () => {
@@ -34,17 +35,17 @@ export default class MenuGroup extends Component {
     }
   }
 
-  isShowDownUl = () => {
-    if (this.props.isOpen) {
-      if (this.props.SidebarMenuKey === this.props.menuActiveKey) {
-        return 'wrapper-ul'
-      } else {
-        return 'wrapper-ul hidden-ul'
-      }
-    } else {
-      return 'wrapper-ul hidden-ul'
-    }
-  }
+  // isShowDownUl = () => {
+  //   if (this.props.isOpen) {
+  //     if (this.props.SidebarMenuKey === this.props.menuActiveKey) {
+  //       return 'wrapper-ul'
+  //     } else {
+  //       return 'wrapper-ul hidden-ul'
+  //     }
+  //   } else {
+  //     return 'wrapper-ul hidden-ul'
+  //   }
+  // }
 
   renderChildren = (props) => {
     return React.Children.map(props.children, child => {
@@ -60,7 +61,7 @@ export default class MenuGroup extends Component {
   }
 
   render() {
-    const { title } = this.props
+    const { title, subMenuNum } = this.props
     return (
       <div className={this.props.isOpen ? 'menu-group' : 'menu-group close-menu-group'}>
         <div
@@ -78,7 +79,7 @@ export default class MenuGroup extends Component {
           }
           {this.isShowMenuPointer()}
         </div>
-        <ul className={this.isShowDownUl()}>
+        <ul className='wrapper-ul' style={{height: this.props.isOpen ? (this.props.SidebarMenuKey === this.props.menuActiveKey ? subMenuNum * 30 : '0') : subMenuNum * 30}}>
           {this.renderChildren(this.props)}
         </ul>
       </div>

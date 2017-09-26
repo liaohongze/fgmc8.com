@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Form, FormGroup, Row, Col, FormControl, ControlLabel, HelpBlock, Button, Panel, Alert } from 'react-bootstrap'
+import { Form, FormGroup, Row, Col, FormControl, ControlLabel, HelpBlock, Button, Panel } from 'react-bootstrap'
 import Client from '../../common/Client'
 import { auth } from '../../common/Auth'
 import {Message} from 'uxcore'
+
+let USERNAME, ID
 
 export default class Changepwd extends Component {
   static propTypes = {
@@ -11,9 +13,7 @@ export default class Changepwd extends Component {
   }
 
   state = {
-    timer: null,
-    isConfirmed: true,
-    changeSuccess: false
+    isConfirmed: true
   }
 
   handleSubmit = () => {
@@ -21,28 +21,25 @@ export default class Changepwd extends Component {
       this.setState({ isConfirmed: false })
     } else {
       const values = {
-        userName: auth.getCurrentUser().userName,
+        userName: USERNAME,
         password: this.confirmpwd.value
       }
-      Client.changeAdminPwd(values, auth.getCurrentUser().id, result => {
-        if (!result.errored) {
-          this.setState({
-            changeSuccess: true
-          })
+      Client.changeAdminPwd(values, ID, result => {
+        if (!result.errored && this.refs.changepwdBox) {
           Message['success']('修改管理员密码成功！')
-          this.state.timer = setTimeout(() => { this.setState({ changeSuccess: false }) }, 2000)
         }
       })
     }
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.state.timer)
+  componentWillMount () {
+    USERNAME = auth.getCurrentUser().userName
+    ID = auth.getCurrentUser().id
   }
 
   render() {
     return (
-      <div className='changepwd-box'>
+      <div className='changepwd-box' ref='changepwdBox'>
         <Panel collapsible defaultExpanded header='修改管理员密码' bsStyle='info'>
           <form>
             <Form componentClass='fieldset' horizontal>
@@ -83,14 +80,6 @@ export default class Changepwd extends Component {
                 <Col sm={2} md={2} />
               </FormGroup>
             </Form>
-
-            <Row>
-              <Col componentClass={ControlLabel} sm={2} md={2} />
-              <Col sm={8} md={8}>
-                {this.state.changeSuccess ? <Alert bsStyle='success'>修改管理员密码成功！</Alert> : null}
-              </Col>
-              <Col sm={2} md={2} />
-            </Row>
 
             <Row>
               <Col componentClass={ControlLabel} sm={2} md={2} />

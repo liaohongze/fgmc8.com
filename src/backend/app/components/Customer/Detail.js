@@ -19,7 +19,7 @@ export default class Detail extends Component {
     this.setState({ loading: true })
     const { match: { params: { id } } } = this.props
     Client.getCustomer(id, result => {
-      if (!result.errored) {
+      if (!result.errored && this.refs.userDetail) {
         this.setState({
           loading: false,
           data: result.object
@@ -38,7 +38,7 @@ export default class Detail extends Component {
         return <div className='no-result'>暂无数据</div>
       } else {
         return (
-          <div className='user-Detail'>
+          <div className='user-detail' ref='userDetail'>
             <Panel collapsible defaultExpanded header='用户详情' bsStyle='info'>
               <Table striped bordered condensed hover>
                 <tbody>

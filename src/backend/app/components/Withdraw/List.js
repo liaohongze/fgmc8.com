@@ -22,7 +22,7 @@ export default class List extends Component {
   refreshData = (page, size) => {
     this.setState({ loading: true })
     Client.getWithdraw(page, size, result => {
-      if (!result.errored) {
+      if (!result.errored && this.refs.withdrawRecord) {
         this.setState({
           loading: false,
           totalPage: Math.ceil(result.object.total / size),
@@ -30,10 +30,6 @@ export default class List extends Component {
         })
       }
     })
-  }
-
-  componentDidMount() {
-    this.refreshData(this.state.activePage, this.state.pageSize)
   }
 
   confirm = (id, cutomerId, location) => {
@@ -47,7 +43,7 @@ export default class List extends Component {
       let newArr = this.state.withdrawlData.slice()
       newArr[location].status = '提现完成'
       newArr[location].reviewTime = result.object.reviewTime
-      if (!result.errored) {
+      if (!result.errored && this.refs.withdrawRecord) {
         this.setState({ withdrawlData: newArr })
       }
     })
@@ -64,10 +60,14 @@ export default class List extends Component {
     return <ListItem key={index} location={index} withdraw={item} confirm={this.confirm} />
   }
 
+  componentDidMount() {
+    this.refreshData(this.state.activePage, this.state.pageSize)
+  }
+
   render() {
     const { loading, withdrawlData, totalPage, activePage } = this.state
     return (
-      <div className='withdrawal-record'>
+      <div className='withdraw-record' ref='withdrawRecord'>
         <Panel collapsible defaultExpanded header='提现记录' bsStyle='info'>
           {
             loading

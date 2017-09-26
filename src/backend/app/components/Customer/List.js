@@ -16,7 +16,7 @@ export default class List extends Component {
 
   state = {
     loading: false,
-    data: [],
+    users: [],
     totalPage: 1,
     activePage: 1,
     pageSize: 10
@@ -25,36 +25,32 @@ export default class List extends Component {
   refleshData = (page, size) => {
     this.setState({ loading: true })
     Client.getCustomers(page, size, result => {
-      if (!result.errored) {
+      if (!result.errored && this.refs.usersBox) {
         this.setState({
           loading: false,
-          data: result.object.list,
+          users: result.object.list,
           totalPage: Math.ceil(result.object.total / this.state.pageSize)
         })
       }
     })
   }
 
-  componentDidMount() {
-    this.refleshData(this.state.activePage, this.state.pageSize)
-  }
-
   deleteUser = (id) => {
     Client.deleteCustomer(id, result => {
       if (!result.errored) {
         this.setState(prevState => {
-          return { data: prevState.data.filter(item => item.id !== id) }
+          return { users: prevState.users.filter(item => item.id !== id) }
         })
       }
     })
   }
 
   lockCustomer = (id, location) => {
-    let newArr = this.state.data.slice()
+    let newArr = this.state.users.slice()
     newArr[location].lockoutEnabled = !newArr[location].lockoutEnabled
     Client.lockout(ID, { 'customerId': id }, result => {
       if (!result.errored) {
-        this.setState({ data: newArr })
+        this.setState({ users: newArr })
       }
     })
   }
@@ -70,11 +66,15 @@ export default class List extends Component {
     return <ListItem key={index} location={index} user={item} delete={this.deleteUser} lock={this.lockCustomer} itemMatch={this.props.match} />
   }
 
+  componentDidMount() {
+    this.refleshData(this.state.activePage, this.state.pageSize)
+  }
+
   render() {
-    const { loading, data, activePage, totalPage } = this.state
+    const { loading, users, activePage, totalPage } = this.state
 
     return (
-      <div className='user'>
+      <div className='user' ref='usersBox'>
         <Form inline className='search-bar'>
           <FormGroup>
             <FormControl type='text' placeholder='搜索用户' />
@@ -86,7 +86,7 @@ export default class List extends Component {
             loading
               ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='2x' /></div>
               : (
-                data.length === 0
+                users.length === 0
                   ? <div className='no-result'>暂无数据</div>
                   : (
                     <Table responsive>
@@ -104,7 +104,7 @@ export default class List extends Component {
                       </thead>
                       <tbody>
                         {
-                          data.map(this.renderUser)
+                          users.map(this.renderUser)
                         }
                       </tbody>
                     </Table>
