@@ -24,6 +24,37 @@ export function CountDown(stockTime) {
     s = (s < 10) ? ('0' + s) : s
     return m + ':' + s
   } else {
-    return '00:01'
+    return '00:00'
+  }
+}
+
+export function getCaptcha() {
+  let expression = ''
+  let result = 0
+
+  let Calpre = Math.round(Math.random() * 10)
+  let Calafter = Math.round(Math.random() * 10)
+
+  var codeCal = ['-', '+', 'x']
+  var i = Math.round(Math.random() * 2)
+
+  switch (codeCal[i]) { // 判断运算符并计算
+    case '-':
+      expression = Calpre + '-' + Calafter
+      result = Calpre - Calafter
+      break
+    case '+':
+      expression = Calpre + '+' + Calafter
+      result = Calpre + Calafter
+      break
+    case 'x':
+      expression = Calpre + 'x' + Calafter
+      result = Calpre * Calafter
+      break
+  }
+
+  return {
+    expression: expression,
+    result: result
   }
 }

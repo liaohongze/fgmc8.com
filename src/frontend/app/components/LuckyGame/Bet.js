@@ -24,7 +24,7 @@ export default class Bet extends Component {
     betName: '庄',
     odds: 1.9,
     amount: '5',
-    countDown: 10,
+    countDown: 20,
     countDownStatus: false,
     waitTime: 3,
     showWaitDialog: false,
@@ -51,7 +51,7 @@ export default class Bet extends Component {
       return {
         countDownStatus: true,
         hadBet: false,
-        countDown: 10
+        countDown: 20
       }
     })
     // 重置所有定时器
@@ -67,7 +67,6 @@ export default class Bet extends Component {
     })
     // 获取往期记录
     Client.getGamblingsRound(auth.getToken(), result => {
-      console.log(result)
       if (!result.errored) { this.setState({historyData: result.object}) }
     })
     // 开始倒计时
@@ -126,7 +125,7 @@ export default class Bet extends Component {
       } else {
         window.clearInterval(waitTimer)
         window.clearTimeout(closeWaitTimer)
-        this.setState({ showWaitDialog: false, waitTime: 3, countDown: 10 })
+        this.setState({ showWaitDialog: false, waitTime: 3, countDown: 20 })
         this.betUnable()
       }
     })
