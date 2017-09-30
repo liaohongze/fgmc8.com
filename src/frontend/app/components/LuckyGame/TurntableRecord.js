@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import { formatDate } from '../../utils/tools'
 import Toolbar from '../shared/Toolbar'
 import NoMore from '../shared/NoMore'
 import RecordItem from './RecordItem'
+import QueueAnim from 'rc-queue-anim'
 
 let ID
 
@@ -20,7 +21,7 @@ export default class TurntableRecord extends Component {
 
   refreshData = (page, size) => {
     this.setState({ loading: true })
-    Client.getTurntable(ID, page, size, result => {
+    Client.getTurntable(ID, page, size, auth.getToken(), result => {
       if (!result.errored && this.refs.turntableRecord) {
         this.setState({
           loading: false,
@@ -41,7 +42,7 @@ export default class TurntableRecord extends Component {
   }
 
   componentWillMount() {
-    ID = auth.getCurrentUser().id
+    ID = currentUser().id
   }
 
   componentDidMount() {
@@ -59,15 +60,17 @@ export default class TurntableRecord extends Component {
       <div className='turntable-record growup-record toolbar-page' ref='turntableRecord'>
         <Toolbar link='/luckygame' title='大转盘记录' />
         <div className='record-list toolbar-page-content'>
-          {
-            data.length === 0
-              ? <NoMore />
-              : (
-                data.map((item, index) => {
-                  return <RecordItem key={index} profit={item.amount} pasture={item.name} date={formatDate(item.created, 'YYYY-MM-DD HH:mm:ss')} />
-                })
-              )
-          }
+          <QueueAnim delay={300} className='queue-simple'>
+            {
+              data.length === 0
+                ? <NoMore />
+                : (
+                  data.map((item, index) => {
+                    return <RecordItem key={index} profit={item.amount} pasture={item.name} date={formatDate(item.created, 'YYYY-MM-DD HH:mm:ss')} />
+                  })
+                )
+            }
+          </QueueAnim>
           {
             loading ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='lg' /></div> : null
           }

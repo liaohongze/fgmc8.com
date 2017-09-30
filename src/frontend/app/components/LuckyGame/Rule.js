@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import { formatDate } from '../../utils/tools'
 import Toolbar from '../shared/Toolbar'
 import NoMore from '../shared/NoMore'
@@ -14,7 +15,7 @@ export default class Rule extends Component {
 
   componentDidMount () {
     this.setState({loading: true})
-    Client.getAbout('bet', result => {
+    Client.getAbout('bet', auth.getToken(), result => {
       if (!result.errored && this.refs.betruleBox) {
         this.setState({
           loading: false,

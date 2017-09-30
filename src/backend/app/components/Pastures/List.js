@@ -4,6 +4,7 @@ import { Table, Panel, Pagination, Form, FormGroup, FormControl, Button } from '
 import { Link } from 'react-router-dom'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import { formatDate } from '../../utils/tools'
 import './List.scss'
 
@@ -22,7 +23,7 @@ export default class List extends Component {
 
   refleshData = (page, size) => {
     this.setState({ loading: true })
-    Client.getPastures(page, size, result => {
+    Client.getPastures(page, size, auth.getToken(), result => {
       if (!result.errored && this.refs.pasturesList) {
         this.setState({
           loading: false,

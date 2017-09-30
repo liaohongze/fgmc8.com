@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import { Base64Decode } from '../../utils/basecode'
 import './Promotional.scss'
 
@@ -58,7 +59,7 @@ export default class Promotional extends Component {
         'wechat': this.refs.wechat.value,
         'alipay': this.refs.alipay.value
       }
-      Client.signup(values, result => {
+      Client.signup(values, auth.getToken(), result => {
         if (!result.errored && this.refs.promotionalBox) {
           this.props.history.push('/login')
         }
@@ -79,7 +80,7 @@ export default class Promotional extends Component {
         this.setState({ accountIsError: true, accountErrorInfo: '只能含有数字、字母、下划线！' })
       } else {
         if (this.refs.account.value.length >= min && this.refs.account.value.length <= max) {
-          Client.customerExist(this.refs.account.value, result => {
+          Client.customerExist(this.refs.account.value, auth.getToken(), result => {
             if (!result.errored && this.refs.promotionalBox) {
               if (result.object) {
                 this.setState({ accountIsError: true, accountErrorInfo: '该用户已存在！' })
@@ -95,7 +96,7 @@ export default class Promotional extends Component {
 
   nickChange = () => {
     if (this.refs.nickname.value.length !== 0) {
-      Client.nicknameExist(this.refs.nickname.value, result => {
+      Client.nicknameExist(this.refs.nickname.value, auth.getToken(), result => {
         if (!result.errored && this.refs.promotionalBox) {
           if (result.object) {
             this.setState({ nicknameIsError: true, nicknameErrorInfo: '该昵称已被使用！' })
@@ -115,7 +116,7 @@ export default class Promotional extends Component {
       this.setState({ phoneIsError: true, phoneErrorInfo: '请输入有效的手机号码！' })
     } else {
       if (this.refs.phone.value.length === 11) {
-        Client.mobileExist(this.refs.phone.value, result => {
+        Client.mobileExist(this.refs.phone.value, auth.getToken(), result => {
           if (!result.errored && this.refs.promotionalBox) {
             if (result.object) {
               this.setState({ phoneIsError: true, phoneErrorInfo: '该手机号码已被注册！' })

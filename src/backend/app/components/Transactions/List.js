@@ -5,6 +5,7 @@ import { Table, Panel, Pagination, Form, FormGroup, FormControl, Button } from '
 import FontAwesome from 'react-fontawesome'
 import { formatDate } from '../../utils/tools'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import './List.scss'
 
 export default class List extends Component {
@@ -22,7 +23,7 @@ export default class List extends Component {
 
   refleshData = (page, size) => {
     this.setState({ loading: true })
-    Client.getTransactions(page, size, result => {
+    Client.getTransactions(page, size, auth.getToken(), result => {
       if (!result.errored && this.refs.transactionsList) {
         this.setState({
           loading: false,

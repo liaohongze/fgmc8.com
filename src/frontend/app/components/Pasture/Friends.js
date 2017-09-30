@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import FriendItem from './FriendItem'
 import Toolbar from '../shared/Toolbar'
 import NoMore from '../shared/NoMore'
@@ -16,12 +16,12 @@ export default class Friends extends Component {
   }
 
   componentWillMount() {
-    USERNAME = auth.getCurrentUser().userName
+    USERNAME = currentUser().name
   }
 
   componentDidMount() {
     this.setState({ loading: true })
-    Client.getRecommend(USERNAME, result => {
+    Client.getRecommend(USERNAME, auth.getToken(), result => {
       if (!result.errored && this.refs.friendsBox) {
         this.setState({
           loading: false,

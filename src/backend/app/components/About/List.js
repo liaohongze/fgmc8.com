@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Table, Panel, Pagination } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import ListItem from './ListItem'
 import './List.scss'
 
@@ -21,7 +22,7 @@ export default class List extends Component {
 
   refreshData = (page, size) => {
     this.setState({ loading: true })
-    Client.getAbouts(page, size, result => {
+    Client.getAbouts(page, size, auth.getToken(), result => {
       if (!result.errored && this.refs.aboutsBox) {
         this.setState({
           loading: false,
@@ -37,7 +38,7 @@ export default class List extends Component {
   }
 
   deleteAbout = (id) => {
-    Client.deleteAbout(id, result => {
+    Client.deleteAbout(id, auth.getToken(), result => {
       if (!result.errored && this.refs.aboutsBox) {
         this.setState(prevState => {
           return {

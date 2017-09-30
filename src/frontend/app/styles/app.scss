@@ -60,6 +60,17 @@ a:visited {
     }
 }
 
+.growup .growup-list,
+.news .news-list,
+.pasture .pasture-list,
+.lucky-game .lucky-game-list,
+.trade .trade-list {
+    padding-top: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+
+
 // 加载
 .loading {
     text-align: center;

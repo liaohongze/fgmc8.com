@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import Toolbar from '../shared/Toolbar'
 import './Contact.scss'
 
@@ -11,7 +12,7 @@ export default class Contact extends Component {
 
   componentDidMount() {
     this.setState({ loading: true })
-    Client.getAbout('wechat', result => {
+    Client.getAbout('wechat', auth.getToken(), result => {
       if (this.refs.contactBox) {
         if (!result.errored) {
           this.setState({

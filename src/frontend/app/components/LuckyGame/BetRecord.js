@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
-// import { formatDate } from '../../utils/tools'
+import { auth, currentUser } from '../../common/Auth'
 import Toolbar from '../shared/Toolbar'
 import NoMore from '../shared/NoMore'
 import RecordItem from './BetRecordItem'
@@ -20,7 +19,7 @@ export default class BetRecord extends Component {
 
   refreshData = (page, size) => {
     this.setState({ loading: true })
-    Client.getWillageRecord(ID, page, size, result => {
+    Client.getWillageRecord(ID, page, size, auth.getToken(), result => {
       if (!result.errored && this.refs.betRecord) {
         this.setState({
           loading: false,
@@ -41,7 +40,7 @@ export default class BetRecord extends Component {
   }
 
   componentWillMount() {
-    ID = auth.getCurrentUser().id
+    ID = currentUser().id
   }
 
   componentDidMount() {

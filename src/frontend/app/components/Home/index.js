@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import Item from './Item'
 import Navbar from './Navbar'
 import './Home.scss'
@@ -12,18 +11,18 @@ let USERNAME, ID
 
 export default class Home extends Component {
   state = {
-    userInfo: '',
+    userInfo: {userName: '', nickName: '', stock: '', direct: '', invest: '', income: ''},
     friends: 0
   }
 
   componentWillMount() {
-    ID = auth.getCurrentUser().id
-    USERNAME = auth.getCurrentUser().userName
+    ID = currentUser().id
+    USERNAME = currentUser().name
   }
 
   componentDidMount() {
-    const userInfo = Client.getUser(ID, (result) => { return result })
-    const recomUsers = Client.getRecommend(USERNAME, (result) => { return result })
+    const userInfo = Client.getUser(ID, auth.getToken(), (result) => { return result })
+    const recomUsers = Client.getRecommend(USERNAME, auth.getToken(), (result) => { return result })
     Promise.all([userInfo, recomUsers]).then(results => {
       if (this.refs.homeBox) {
         this.setState({

@@ -2,9 +2,20 @@ import Client from './Client'
 
 const auth = {
   isAuthenticated: () => {
-    const loginStatus = auth.getLoginStatu()
-    if (loginStatus === 'true') {
-      return true
+    const token = auth.getToken()
+    if (token) {
+      let payload = JSON.parse(window.atob(token.split('.')[1]))
+      let nowDate = Date.now() / 1000
+      if (payload.exp > nowDate) {
+        // if (payload.exp - nowDate < 300 && payload.exp - nowDate > 0) {
+        //   Client.refreshToken(token, result => {
+        //     auth.saveToken(result.object)
+        //   })
+        // }
+        return true
+      } else {
+        return false
+      }
     } else {
       return false
     }
@@ -12,13 +23,11 @@ const auth = {
   authenticate: (values, cb) => {
     Client.login(values, (result) => {
       if (!result.errored) {
-        auth.saveLoginStatu(!result.errored)
-        auth.saveCurrentUserName(result.object.name)
-        auth.saveCurrentUserId(result.object.id)
+        auth.saveToken(result.object)
       }
       const success = true
       const failed = false
-      if (auth.getLoginStatu() === 'true') {
+      if (auth.getToken()) {
         cb(success)
       } else {
         cb(failed)
@@ -26,34 +35,20 @@ const auth = {
     })
   },
   signout: () => {
-    auth.removeLoginStatu()
+    auth.removeToken()
   }
 }
 
-auth.saveLoginStatu = (statu) => {
-  window.localStorage.setItem('loginStatus', statu)
+auth.saveToken = (token) => {
+  window.localStorage.setItem('token', token)
 }
 
-auth.getLoginStatu = () => {
-  return window.localStorage.getItem('loginStatus')
+auth.getToken = () => {
+  return window.localStorage.getItem('token')
 }
 
-auth.removeLoginStatu = () => {
-  window.localStorage.removeItem('loginStatus')
-  window.localStorage.removeItem('currentUserName')
-  window.localStorage.removeItem('currentUserId')
-}
-
-auth.saveCurrentUserName = (name) => {
-  window.localStorage.setItem('currentUserName', name)
-}
-
-auth.saveCurrentUserId = (id) => {
-  window.localStorage.setItem('currentUserId', id)
-}
-
-auth.getCurrentUser = () => {
-  return {'userName': window.localStorage.getItem('currentUserName'), 'id': window.localStorage.getItem('currentUserId')}
+auth.removeToken = () => {
+  window.localStorage.removeItem('token')
 }
 
 const isLogin = function () {
@@ -71,8 +66,8 @@ const currentUser = function () {
     const token = auth.getToken()
     let payload = JSON.parse(window.atob(token.split('.')[1]))
     return {
-      id: payload.data.id,
-      name: payload.data.username
+      id: payload.nameid,
+      name: payload.unique_name
     }
   }
 }

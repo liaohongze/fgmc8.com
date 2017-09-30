@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import Toolbar from '../shared/Toolbar'
 import './Sell.scss'
 
@@ -30,8 +30,8 @@ export default class Sell extends Component {
         'amount': parseInt(this.refs.amount.value)
       }
 
-      Client.transactions(values, result => {
-        if (!result.errored && this.refs.tradeSellBox) {
+      Client.transactions(values, auth.getToken(), result => {
+        if (!result.errored) {
           this.props.history.push('/trade/sellrecord')
         }
       })
@@ -53,7 +53,7 @@ export default class Sell extends Component {
 
   buyerChange = () => {
     if (this.refs.buyer.value.length !== 0) {
-      Client.customerExist(this.refs.buyer.value, result => {
+      Client.customerExist(this.refs.buyer.value, auth.getToken(), result => {
         if (!result.errored && this.refs.tradeSellBox) {
           if (result.object) {
             this.setState({ buyerIsError: false })
@@ -71,8 +71,8 @@ export default class Sell extends Component {
   }
 
   componentWillMount() {
-    ID = auth.getCurrentUser().id
-    USERNAME = auth.getCurrentUser().userName
+    ID = currentUser().id
+    USERNAME = currentUser().name
   }
 
   render() {

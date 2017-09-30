@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Toast } from 'react-weui'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import Toolbar from '../shared/Toolbar'
 import './Withdraw.scss'
 
@@ -36,7 +36,7 @@ export default class Withdraw extends Component {
         'amount': parseInt(this.refs.amount.value),
         'type': this.refs.channel.value
       }
-      Client.withdraws(values, result => {
+      Client.withdraws(values, auth.getToken(), result => {
         if (!result.errored && this.refs.withdrawBox) {
           this.refs.amount.value = null
           this.refs.channel.value = 'select'
@@ -73,7 +73,7 @@ export default class Withdraw extends Component {
   }
 
   componentWillMount() {
-    ID = auth.getCurrentUser().id
+    ID = currentUser().id
   }
 
   componentWillUnMount() {

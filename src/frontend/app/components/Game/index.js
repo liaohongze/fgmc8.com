@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Dialog } from 'react-weui'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import { CountDown } from '../../utils/tools'
 import './Game.scss'
 
@@ -37,7 +37,7 @@ export default class Game extends Component {
   }
 
   componentWillMount() {
-    ID = auth.getCurrentUser().id
+    ID = currentUser().id
   }
 
   componentDidMount() {
@@ -54,8 +54,8 @@ export default class Game extends Component {
   }
 
   refreshData = () => {
-    const userInfo = Client.getUser(ID, result => { return result })
-    const pasturesData = Client.getPastures(ID, result => { return result })
+    const userInfo = Client.getUser(ID, auth.getToken(), result => { return result })
+    const pasturesData = Client.getPastures(ID, auth.getToken(), result => { return result })
     Promise.all([userInfo, pasturesData]).then(results => {
       let array = []
       for (var i = 0; i < results[1].object.length; i++) {
@@ -94,7 +94,7 @@ export default class Game extends Component {
           'coordinate': coordinate
         }
 
-        Client.openPasture(values, result => {
+        Client.openPasture(values, auth.getToken(), result => {
           if (!result.errored) {
             if (result.object.pastureIssue === 100) {
               this.setState({
@@ -132,7 +132,7 @@ export default class Game extends Component {
         'customerId': this.state.userInfo.id,
         'code': code
       }
-      Client.stocking(values, result => {
+      Client.stocking(values, auth.getToken(), result => {
         if (!result.errored && this.refs.pastureGameBox) {
           if (result.object.stockingIssue === 100) {
             this.setState({
@@ -186,7 +186,7 @@ export default class Game extends Component {
         'customerId': this.state.userInfo.id,
         'code': code
       }
-      Client.recycle(values, result => {
+      Client.recycle(values, auth.getToken(), result => {
         if (!result.errored && this.refs.pastureGameBox) {
           if (result.object.recyclingIssue === 100) {
             this.setState({

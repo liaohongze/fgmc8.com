@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import SellItem from './SellItem'
 import Toolbar from '../shared/Toolbar'
 import NoMore from '../shared/NoMore'
@@ -20,7 +20,7 @@ export default class SellRecord extends Component {
 
   refreshData = (page, size) => {
     this.setState({ loading: true })
-    Client.getSellRecord(USERNAME, page, size, result => {
+    Client.getSellRecord(USERNAME, page, size, auth.getToken(), result => {
       if (!result.errored && this.refs.sellRecord) {
         this.setState({
           loading: false,
@@ -50,7 +50,7 @@ export default class SellRecord extends Component {
       'status': status
     }
 
-    Client.transactionsAction(values, actionResult => {
+    Client.transactionsAction(values, auth.getToken(), actionResult => {
       if (!actionResult.errored && this.refs.sellRecord) {
         this.setState({ record: newArr })
       }
@@ -62,8 +62,8 @@ export default class SellRecord extends Component {
   }
 
   componentWillMount() {
-    ID = auth.getCurrentUser().id
-    USERNAME = auth.getCurrentUser().userName
+    ID = currentUser().id
+    USERNAME = currentUser().name
   }
 
   componentDidMount() {

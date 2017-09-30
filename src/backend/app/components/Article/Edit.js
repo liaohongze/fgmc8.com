@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Form, FormGroup, Row, Col, FormControl, ControlLabel, Button, Panel } from 'react-bootstrap'
 import HtmlEditor from '../Shared/HtmlEditor'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import './Editor.scss'
 
 export default class Edit extends Component {
@@ -13,7 +14,7 @@ export default class Edit extends Component {
 
   componentDidMount () {
     const { match: { params: { id } } } = this.props
-    Client.getArticle(id, result => {
+    Client.getArticle(id, auth.getToken(), result => {
       if (result.length !== 0) {
         this.title.value = result.object.title
         this.refs.content.editHandle(result.object.content)
@@ -27,7 +28,7 @@ export default class Edit extends Component {
       content: this.refs.content.saveHandle()
     }
     const { match: { params: { id } } } = this.props
-    Client.editArticle(id, values, result => {
+    Client.editArticle(id, values, auth.getToken(), result => {
       if (!result.errored) {
         this.props.history.push('/article')
       }

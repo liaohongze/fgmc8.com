@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Form, FormGroup, Row, Col, FormControl, ControlLabel, Button, Panel } from 'react-bootstrap'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import './Edit.scss'
 
 export default class Edit extends Component {
@@ -12,7 +13,7 @@ export default class Edit extends Component {
 
   componentDidMount() {
     const { match: { params: { id } } } = this.props
-    Client.getCustomer(id, result => {
+    Client.getCustomer(id, auth.getToken(), result => {
       if (!result.errored) {
         this.username.value = result.object.userName
         this.nickname.value = result.object.nickName
@@ -33,7 +34,7 @@ export default class Edit extends Component {
       'alipay': this.alipay.value
     }
 
-    Client.editCustomer(values, id, result => {
+    Client.editCustomer(values, id, auth.getToken(), result => {
       if (!result.errored) {
         this.props.history.push('/customer')
       }

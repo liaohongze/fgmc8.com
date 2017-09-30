@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import FontAwesome from 'react-fontawesome'
 import { formatDate } from '../../utils/tools'
 import Toolbar from '../shared/Toolbar'
@@ -14,7 +15,7 @@ export default class Rule extends Component {
 
   componentDidMount () {
     this.setState({loading: true})
-    Client.getAbout('guid', result => {
+    Client.getAbout('guid', auth.getToken(), result => {
       if (!result.errored && this.refs.ruleBox) {
         this.setState({
           loading: false,

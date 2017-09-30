@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { Button, Table, Panel, Pagination, Form, FormGroup, FormControl } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import ListItem from './ListItem'
 import './User.scss'
 
-let ID = auth.getCurrentUser().id
+let ID
 
 export default class List extends Component {
   static propTypes = {
@@ -24,7 +24,7 @@ export default class List extends Component {
 
   refleshData = (page, size) => {
     this.setState({ loading: true })
-    Client.getCustomers(page, size, result => {
+    Client.getCustomers(page, size, auth.getToken(), result => {
       if (!result.errored && this.refs.usersBox) {
         this.setState({
           loading: false,
@@ -36,7 +36,7 @@ export default class List extends Component {
   }
 
   deleteUser = (id) => {
-    Client.deleteCustomer(id, result => {
+    Client.deleteCustomer(id, auth.getToken(), result => {
       if (!result.errored) {
         this.setState(prevState => {
           return { users: prevState.users.filter(item => item.id !== id) }
@@ -48,7 +48,7 @@ export default class List extends Component {
   lockCustomer = (id, location) => {
     let newArr = this.state.users.slice()
     newArr[location].lockoutEnabled = !newArr[location].lockoutEnabled
-    Client.lockout(ID, { 'customerId': id }, result => {
+    Client.lockout(ID, { 'customerId': id }, auth.getToken(), result => {
       if (!result.errored) {
         this.setState({ users: newArr })
       }
@@ -64,6 +64,10 @@ export default class List extends Component {
 
   renderUser = (item, index) => {
     return <ListItem key={index} location={index} user={item} delete={this.deleteUser} lock={this.lockCustomer} itemMatch={this.props.match} />
+  }
+
+  componentWillMount () {
+    ID = currentUser().id
   }
 
   componentDidMount() {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Form, FormGroup, Row, Col, FormControl, ControlLabel, HelpBlock, Button, Panel } from 'react-bootstrap'
 import HtmlEditor from '../Shared/HtmlEditor'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import './Create.scss'
 // import './Editor.scss'
 
@@ -31,7 +32,7 @@ export default class Creat extends Component {
         'content': contentValue
       }
 
-      Client.createAbout(values, result => {
+      Client.createAbout(values, auth.getToken(), result => {
         if (!result.errored) {
           this.props.history.push('/abouts')
         }

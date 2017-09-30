@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import Toolbar from '../shared/Toolbar'
+import QueueAnim from 'rc-queue-anim'
 import './Recharge.scss'
 
 let ID
@@ -20,7 +21,7 @@ export default class Recharge extends Component {
   }
 
   componentWillMount() {
-    ID = auth.getCurrentUser().id
+    ID = currentUser().id
   }
 
   handleSubmit = () => {
@@ -37,7 +38,7 @@ export default class Recharge extends Component {
         'picture': 'string'
       }
 
-      Client.Recharges(values, result => {
+      Client.Recharges(values, auth.getToken(), result => {
         if (!result.errored && this.refs.rechargeBox) {
           this.props.history.push('/pasture/rechargerecord')
         }
@@ -70,28 +71,30 @@ export default class Recharge extends Component {
       <div className='recharge toolbar-page' ref='rechargeBox'>
         <Toolbar link='/pasture' title='创建充值' />
         <div className='recharge-content toolbar-page-content'>
-          <div className={amountIsError ? 'input-wrapper validata-error' : 'input-wrapper'}>
-            <input type='number' ref='amount' placeholder='请输入充值的金额' onChange={this.amountChange} />
-          </div>
-          {amountIsError ? <div className='validata-info'>{amountErrorInfo}</div> : null}
+          <QueueAnim delay={200} className='queue-simple'>
+            <div key='1' className={amountIsError ? 'input-wrapper validata-error' : 'input-wrapper'}>
+              <input type='number' ref='amount' placeholder='请输入充值的金额' onChange={this.amountChange} />
+            </div>
+            {amountIsError ? <div className='validata-info'>{amountErrorInfo}</div> : null}
 
-          <div className={paymentIsEmpty ? 'input-wrapper validata-error' : 'input-wrapper'}>
-            <select ref='channel' onChange={this.handleChange}>
-              <option value='select'>请选择支付方式</option>
-              <option value='Wechat'>微信支付</option>
-              <option value='Alipay'>支付宝</option>
-            </select>
-          </div>
-          {paymentIsEmpty ? <div className='validata-info'>支付方式不能为空！</div> : null}
+            <div key='2' className={paymentIsEmpty ? 'input-wrapper validata-error' : 'input-wrapper'}>
+              <select ref='channel' onChange={this.handleChange}>
+                <option value='select'>请选择支付方式</option>
+                <option value='Wechat'>微信支付</option>
+                <option value='Alipay'>支付宝</option>
+              </select>
+            </div>
+            {paymentIsEmpty ? <div className='validata-info'>支付方式不能为空！</div> : null}
 
-          <div className={nameIsError ? 'input-wrapper validata-error' : 'input-wrapper'}>
-            <input type='text' ref='name' maxLength='20' placeholder='请输入付款人昵称' onChange={this.handleChange} />
-          </div>
-          {nameIsError ? <div className='validata-info'>付款人昵称不能为空！</div> : null}
-        </div>
+            <div key='3' className={nameIsError ? 'input-wrapper validata-error' : 'input-wrapper'}>
+              <input type='text' ref='name' maxLength='20' placeholder='请输入付款人昵称' onChange={this.handleChange} />
+            </div>
+            {nameIsError ? <div className='validata-info'>付款人昵称不能为空！</div> : null}
 
-        <div className='submit-btn'>
-          <button onClick={this.handleSubmit}>确认充值</button>
+            <div key='4' className='submit-btn'>
+              <button onClick={this.handleSubmit}>确认充值</button>
+            </div>
+          </QueueAnim>
         </div>
       </div>
     )

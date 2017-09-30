@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import { formatDate } from '../../utils/tools'
 import ListItem from './ListItem'
 import Toolbar from '../shared/Toolbar'
 import NoMore from '../shared/NoMore'
-import './News.scss'
+import QueueAnim from 'rc-queue-anim'
 
 export default class News extends Component {
   state = {
@@ -18,7 +19,7 @@ export default class News extends Component {
 
   refreshData = (page, size) => {
     this.setState({ loading: true })
-    Client.getArticles(page, size, result => {
+    Client.getArticles(page, size, auth.getToken(), result => {
       if (!result.errored && this.refs.newsBox) {
         this.setState({
           loading: false,
@@ -54,15 +55,17 @@ export default class News extends Component {
       <div className='news toolbar-page' ref='newsBox'>
         <Toolbar link='/' title='游戏公告' />
         <div className='news-list toolbar-page-content'>
-          {
-            articles.length === 0
-              ? (loading ? null : <NoMore />)
-              : (
-                articles.map((item, index) => {
-                  return <ListItem key={index} link={'/news/' + item.id} title={item.title} articles={formatDate(item.created, 'YYYY-MM-DD')} />
-                })
-              )
-          }
+          <QueueAnim delay={300} className='queue-simple'>
+            {
+              articles.length === 0
+                ? (loading ? null : <NoMore />)
+                : (
+                  articles.map((item, index) => {
+                    return <ListItem key={index} link={'/news/' + item.id} title={item.title} data={formatDate(item.created, 'YYYY-MM-DD')} />
+                  })
+                )
+            }
+          </QueueAnim>
           {
             loading ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='lg' /></div> : null
           }

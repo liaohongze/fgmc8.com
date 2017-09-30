@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
 function login(values, cb) {
-  return fetch(`/api/account/login`, {
+  return fetch(`http://auth.fgmc8.com/token/user/FGMC8Audience`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -38,20 +38,24 @@ function login(values, cb) {
 // }
 
 // 管理员
-function getUser(name, cb) {
+function getUser(name, token, cb) {
   return fetch(`/api/users/${name}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function changeAdminPwd(values, id, cb) {
+function changeAdminPwd(values, id, token, cb) {
   return fetch(`/api/users/${id}/changepassword`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(values)
   })
@@ -61,11 +65,12 @@ function changeAdminPwd(values, id, cb) {
 }
 
 // 锁定用户
-function lockout(id, values, cb) {
+function lockout(id, values, token, cb) {
   return fetch(`/api/users/${id}/lockout`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(values)
   })
@@ -75,29 +80,36 @@ function lockout(id, values, cb) {
 }
 
 // 用户
-function getCustomer(name, cb) {
+function getCustomer(name, token, cb) {
   return fetch(`/api/customers/${name}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function getCustomerByName(name, cb) {
+function getCustomerByName(name, token, cb) {
   return fetch(`/api/customers/${name}/name`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function createCustomer(values, id, cb) {
+function createCustomer(values, id, token, cb) {
   return fetch(`/api/customers/${id}`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(values)
   })
@@ -106,20 +118,24 @@ function createCustomer(values, id, cb) {
     .then(cb)
 }
 
-function getCustomers(pageIndex, pageSize, cb) {
+function getCustomers(pageIndex, pageSize, token, cb) {
   return fetch(`/api/customers?pageIndex=${pageIndex}&pageSize=${pageSize}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function resetPassword(values, id, cb) {
+function resetPassword(values, id, token, cb) {
   return fetch(`/api/users/${id}/resetpassword`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(values)
   })
@@ -128,11 +144,12 @@ function resetPassword(values, id, cb) {
     .then(cb)
 }
 
-function editCustomer(values, id, cb) {
+function editCustomer(values, id, token, cb) {
   return fetch(`/api/customers/${id}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(values)
   })
@@ -141,9 +158,12 @@ function editCustomer(values, id, cb) {
     .then(cb)
 }
 
-function deleteCustomer(id, cb) {
+function deleteCustomer(id, token, cb) {
   return fetch(`/api/customers/${id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
@@ -151,29 +171,36 @@ function deleteCustomer(id, cb) {
 }
 
 // 文章
-function getArticles(pageIndex, pageSize, cb) {
+function getArticles(pageIndex, pageSize, token, cb) {
   return fetch(`/api/articles?pageIndex=${pageIndex}&pageSize=${pageSize}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function getArticle(id, cb) {
+function getArticle(id, token, cb) {
   return fetch(`/api/articles/${id}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function createArticle(values, cb) {
+function createArticle(values, token, cb) {
   return fetch(`/api/articles`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(values)
   })
@@ -182,20 +209,24 @@ function createArticle(values, cb) {
     .then(cb)
 }
 
-function deleteArticle(id, cb) {
+function deleteArticle(id, token, cb) {
   return fetch(`/api/articles/${id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function editArticle(id, values, cb) {
+function editArticle(id, values, token, cb) {
   return fetch(`/api/articles/${id}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(values)
   })
@@ -205,29 +236,36 @@ function editArticle(id, values, cb) {
 }
 
 // 充值
-function getRecharge(id, cb) {
+function getRecharge(id, token, cb) {
   return fetch(`/api/recharges/${id}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function getRecharges(pageIndex, pageSize, cb) {
+function getRecharges(pageIndex, pageSize, token, cb) {
   return fetch(`/api/recharges?pageIndex=${pageIndex}&pageSize=${pageSize}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function Recharge(id, values, cb) {
+function Recharge(id, values, token, cb) {
   return fetch(`/api/users/${id}/recharge`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(values)
   })
@@ -237,18 +275,24 @@ function Recharge(id, values, cb) {
 }
 
 // 牧场
-function getPastures(pageIndex, pageSize, cb) {
+function getPastures(pageIndex, pageSize, token, cb) {
   return fetch(`/api/pastures?pageIndex=${pageIndex}&pageSize=${pageSize}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function getUserPastures(id, cb) {
+function getUserPastures(id, token, cb) {
   return fetch(`/api/pastures/${id}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
@@ -256,18 +300,24 @@ function getUserPastures(id, cb) {
 }
 
 // 养殖记录
-function getRaises(id, cb) {
+function getRaises(id, token, cb) {
   return fetch(`/api/pastures/${id}/raises`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function getIncomes(id, cb) {
+function getIncomes(id, token, cb) {
   return fetch(`/api/pastures/${id}/incomes`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
@@ -275,18 +325,24 @@ function getIncomes(id, cb) {
 }
 
 // 交易
-function getTransactions(pageIndex, pageSize, cb) {
+function getTransactions(pageIndex, pageSize, token, cb) {
   return fetch(`/api/transactions?pageIndex=${pageIndex}&pageSize=${pageSize}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function getUserTransactions(id, pageIndex, pageSize, cb) {
+function getUserTransactions(id, pageIndex, pageSize, token, cb) {
   return fetch(`/api/transactions/${id}?pageIndex=${pageIndex}&pageSize=${pageSize}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
@@ -294,38 +350,48 @@ function getUserTransactions(id, pageIndex, pageSize, cb) {
 }
 
 // 关于
-function getAbouts(pageIndex, pageSize, cb) {
+function getAbouts(pageIndex, pageSize, token, cb) {
   return fetch(`/api/abouts?pageIndex=${pageIndex}&pageSize=${pageSize}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function deleteAbout(id, cb) {
+function deleteAbout(id, token, cb) {
   return fetch(`/api/abouts/${id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function getAbout(id, cb) {
+function getAbout(id, token, cb) {
   return fetch(`/api/abouts/${id}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function createAbout(values, cb) {
+function createAbout(values, token, cb) {
   return fetch(`/api/abouts`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(values)
   })
@@ -334,11 +400,12 @@ function createAbout(values, cb) {
     .then(cb)
 }
 
-function editAbout(id, values, cb) {
+function editAbout(id, values, token, cb) {
   return fetch(`/api/abouts/${id}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(values)
   })
@@ -348,20 +415,24 @@ function editAbout(id, values, cb) {
 }
 
 // 提现
-function getWithdraw(pageIndex, pageSize, cb) {
+function getWithdraw(pageIndex, pageSize, token, cb) {
   return fetch(`/api/withdraws?pageIndex=${pageIndex}&pageSize=${pageSize}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function withdraws(type, values, cb) {
+function withdraws(type, values, token, cb) {
   return fetch(`/api/withdraws/${type}`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(values)
   })
@@ -370,11 +441,12 @@ function withdraws(type, values, cb) {
     .then(cb)
 }
 
-function confirmWithdraws(values, cb) {
+function confirmWithdraws(values, token, cb) {
   return fetch(`/api/withdraws/confirm`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(values)
   })
@@ -384,38 +456,48 @@ function confirmWithdraws(values, cb) {
 }
 
 // 转盘
-function getPrizes(cb) {
+function getPrizes(token, cb) {
   return fetch(`/api/prizes`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function deletePrize(id, cb) {
+function deletePrize(id, token, cb) {
   return fetch(`/api/prizes/${id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function getPrize(id, cb) {
+function getPrize(id, token, cb) {
   return fetch(`/api/prizes/${id}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function editPrize(id, values, cb) {
+function editPrize(id, values, token, cb) {
   return fetch(`/api/prizes/${id}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(values)
   })
@@ -424,11 +506,12 @@ function editPrize(id, values, cb) {
     .then(cb)
 }
 
-function createPrize(values, cb) {
+function createPrize(values, token, cb) {
   return fetch(`/api/prizes`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(values)
   })
@@ -437,9 +520,12 @@ function createPrize(values, cb) {
     .then(cb)
 }
 
-function getTurntableReacord(pageIndex, pageSize, cb) {
+function getTurntableReacord(pageIndex, pageSize, token, cb) {
   return fetch(`/api/turntable?pageIndex=${pageIndex}&pageSize=${pageSize}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)
@@ -447,9 +533,12 @@ function getTurntableReacord(pageIndex, pageSize, cb) {
 }
 
 // 庄和闲
-function getWillageWithIdles(pageIndex, pageSize, cb) {
+function getWillageWithIdles(pageIndex, pageSize, token, cb) {
   return fetch(`/api/willagewithidles?pageIndex=${pageIndex}&pageSize=${pageSize}`, {
-    method: 'GET'
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then(checkStatus)
     .then(parseJSON)

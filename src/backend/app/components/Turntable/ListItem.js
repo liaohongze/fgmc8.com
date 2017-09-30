@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import {Popover, OverlayTrigger, Button} from 'react-bootstrap'
 
 export default class ListItem extends React.PureComponent {
   static propTypes = {
@@ -10,11 +11,17 @@ export default class ListItem extends React.PureComponent {
   }
 
   deletePrize = () => {
+    this.refs.delete.click()
     this.props.delete(this.props.prize.id)
   }
 
   render() {
     const { prize, itemMatch } = this.props
+    const popoverClickRootClose = (
+      <Popover id='popover-trigger-click-root-close' title='确认删除？'>
+        <Button bsStyle='danger' onClick={this.deletePrize}>删除</Button>
+      </Popover>
+    )
     return (
       <tr>
         <td>{prize.title}</td>
@@ -24,7 +31,9 @@ export default class ListItem extends React.PureComponent {
         <td>{prize.reward}</td>
         <td>
           <Link to={`${itemMatch.url}/edit/` + prize.id}><span className='editToggle-btn'>编辑</span></Link>
-          <span className='delete' onClick={this.deletePrize}>删除</span>
+          <OverlayTrigger trigger='click' rootClose placement='left' overlay={popoverClickRootClose}>
+            <span className='delete' ref='delete'>删除</span>
+          </OverlayTrigger>
         </td>
       </tr>
     )

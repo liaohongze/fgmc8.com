@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import Toolbar from '../shared/Toolbar'
 import NoMore from '../shared/NoMore'
 import { formatDate } from '../../utils/tools'
@@ -17,12 +17,12 @@ export default class Harvest extends Component {
   }
 
   componentWillMount() {
-    ID = auth.getCurrentUser().id
+    ID = currentUser().id
   }
 
   componentDidMount() {
     this.setState({ loading: true })
-    Client.getIncomes(ID, result => {
+    Client.getIncomes(ID, auth.getToken(), result => {
       if (!result.errored && this.refs.harvestBox) {
         this.setState({
           loading: false,

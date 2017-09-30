@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Table, Panel } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import './Detail.scss'
 
 export default class Detail extends Component {
@@ -18,7 +19,7 @@ export default class Detail extends Component {
   componentDidMount() {
     this.setState({ loading: true })
     const { match: { params: { id } } } = this.props
-    Client.getCustomer(id, result => {
+    Client.getCustomer(id, auth.getToken(), result => {
       if (!result.errored && this.refs.userDetail) {
         this.setState({
           loading: false,

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Table, Panel } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import ListItem from './ListItem'
 import './List.scss'
 
@@ -18,7 +19,7 @@ export default class List extends Component {
 
   refreshData = () => {
     this.setState({ loading: true })
-    Client.getPrizes(result => {
+    Client.getPrizes(auth.getToken(), result => {
       if (!result.errored && this.refs.turntableList) {
         this.setState({
           loading: false,
@@ -29,7 +30,7 @@ export default class List extends Component {
   }
 
   deletePrize = (id) => {
-    Client.deletePrize(id, result => {
+    Client.deletePrize(id, auth.getToken(), result => {
       if (!result.errored && this.refs.turntableList) {
         this.setState(prevState => {
           return { data: prevState.data.filter(item => item.id !== id) }

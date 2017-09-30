@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Form, FormGroup, Row, Col, FormControl, ControlLabel, Button, Panel } from 'react-bootstrap'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 // import './Editor.scss'
 
 export default class Edit extends Component {
@@ -12,7 +13,7 @@ export default class Edit extends Component {
 
   componentDidMount() {
     const { match: { params: { id } } } = this.props
-    Client.getPrize(id, result => {
+    Client.getPrize(id, auth.getToken(), result => {
       if (!result.errored) {
         this.title.value = result.object.title
         this.name.value = result.object.name
@@ -32,7 +33,7 @@ export default class Edit extends Component {
       'reward': parseInt(this.reward.value)
     }
     const { match: { params: { id } } } = this.props
-    Client.editPrize(id, values, result => {
+    Client.editPrize(id, values, auth.getToken(), result => {
       if (!result.errored) {
         this.props.history.push('/turntable')
       }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Table, Panel } from 'react-bootstrap'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import { getQueryString } from '../../utils/tools'
 import './Reacharge.scss'
 
@@ -24,7 +24,7 @@ export default class Reacharge extends Component {
       'customerId': rechargeInfo.customerId,
       'amount': rechargeInfo.amount
     }
-    Client.Recharge(ID, values, result => {
+    Client.Recharge(ID, values, auth.getToken(), result => {
       if (!result.errored) {
         this.props.history.push('/recharge')
       }
@@ -32,11 +32,11 @@ export default class Reacharge extends Component {
   }
 
   componentWillMount() {
-    ID = auth.getCurrentUser().id
+    ID = currentUser().id
   }
 
   componentDidMount() {
-    Client.getRecharge(getQueryString('id'), result => {
+    Client.getRecharge(getQueryString('id'), auth.getToken(), result => {
       if (!result.errored) {
         this.setState({ rechargeInfo: result.object })
       }

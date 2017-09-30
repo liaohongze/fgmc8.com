@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import Toolbar from '../shared/Toolbar'
 import { Base64Encode } from '../../utils/basecode'
 import './Shared.scss'
@@ -14,11 +14,11 @@ export default class Shared extends Component {
   }
 
   componentWillMount() {
-    USERNAME = auth.getCurrentUser().userName
+    USERNAME = currentUser().name
   }
 
   componentDidMount() {
-    Client.getQRCode(USERNAME, result => {
+    Client.getQRCode(USERNAME, auth.getToken(), result => {
       if (!result.errored && this.refs.sharedBox) {
         this.setState({ qrCode: result.object })
       }

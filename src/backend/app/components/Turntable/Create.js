@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Form, FormGroup, Row, Col, FormControl, ControlLabel, HelpBlock, Button, Panel } from 'react-bootstrap'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import './Create.scss'
 
 export default class Creat extends Component {
@@ -38,7 +39,7 @@ export default class Creat extends Component {
         'probability': parseFloat(probabilityValue),
         'reward': parseInt(rewardValue)
       }
-      Client.createPrize(values, result => {
+      Client.createPrize(values, auth.getToken(), result => {
         if (!result.errored) {
           this.props.history.push('/turntable')
         }

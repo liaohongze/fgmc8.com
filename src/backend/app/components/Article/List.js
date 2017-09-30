@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Table, Panel, Pagination } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import ListItem from './ListItem'
 import './Article.scss'
 
@@ -25,7 +26,7 @@ export default class Article extends Component {
 
   refleshData = (page, size) => {
     this.setState({ loading: true })
-    Client.getArticles(page, size, result => {
+    Client.getArticles(page, size, auth.getToken(), result => {
       if (!result.errored && this.refs.articleBox) {
         this.setState({
           loading: false,
@@ -37,7 +38,7 @@ export default class Article extends Component {
   }
 
   deleteArticle = (id) => {
-    Client.deleteArticle(id, result => {
+    Client.deleteArticle(id, auth.getToken(), result => {
       if (!result.errored && this.refs.articleBox) {
         this.setState(prevState => {
           return {

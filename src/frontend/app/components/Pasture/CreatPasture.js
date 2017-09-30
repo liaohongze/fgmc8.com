@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import Toolbar from '../shared/Toolbar'
+import QueueAnim from 'rc-queue-anim'
 import './CreatPasture.scss'
 
 let ID, USERNAME
@@ -56,7 +57,7 @@ export default class CreatPasture extends Component {
         'wechat': this.refs.wechat.value,
         'alipay': this.refs.alipay.value
       }
-      Client.createUser(ID, values, result => {
+      Client.createUser(ID, values, auth.getToken(), result => {
         this.props.history.push('/pasture/friends')
       })
     }
@@ -75,7 +76,7 @@ export default class CreatPasture extends Component {
         this.setState({ userNameIsError: true, userNameErrorInfo: '只能含有数字、字母、下划线！' })
       } else {
         if (this.refs.userName.value.length >= min && this.refs.userName.value.length <= max) {
-          Client.customerExist(this.refs.userName.value, result => {
+          Client.customerExist(this.refs.userName.value, auth.getToken(), result => {
             if (!result.errored && this.refs.creatPasture) {
               if (result.object) {
                 this.setState({ userNameIsError: true, userNameErrorInfo: '该用户已存在！' })
@@ -102,7 +103,7 @@ export default class CreatPasture extends Component {
       this.setState({ phoneIsError: true, phoneErrorInfo: '请输入有效的手机号码！' })
     } else {
       if (this.refs.phone.value.length === 11) {
-        Client.mobileExist(this.refs.phone.value, result => {
+        Client.mobileExist(this.refs.phone.value, auth.getToken(), result => {
           if (!result.errored && this.refs.creatPasture) {
             if (result.object) {
               this.setState({ phoneIsError: true, phoneErrorInfo: '该手机号码已被注册！' })
@@ -117,7 +118,7 @@ export default class CreatPasture extends Component {
 
   nickChange = () => {
     if (this.refs.nickName.value.length !== 0) {
-      Client.nicknameExist(this.refs.nickName.value, result => {
+      Client.nicknameExist(this.refs.nickName.value, auth.getToken(), result => {
         if (!result.errored && this.refs.creatPasture) {
           if (result.object) {
             this.setState({ nickNameIsError: true, nickNameErrorInfo: '该昵称已被注册！' })
@@ -135,12 +136,12 @@ export default class CreatPasture extends Component {
   }
 
   componentWillMount() {
-    ID = auth.getCurrentUser().id
-    USERNAME = auth.getCurrentUser().userName
+    ID = currentUser().id
+    USERNAME = currentUser().name
   }
 
   componentDidMount() {
-    Client.getRecommend(USERNAME, result => {
+    Client.getRecommend(USERNAME, auth.getToken(), result => {
       if (!result.errored && this.refs.creatPasture) {
         this.setState({ recomName: result[0] })
       }
@@ -163,39 +164,41 @@ export default class CreatPasture extends Component {
       <div className='creat-pasture toolbar-page' ref='creatPasture'>
         <Toolbar link='/pasture' title='开发新牧场' />
         <div className='creat-pasture-content toolbar-page-content'>
-          <div className={userNameIsError ? 'input-wrapper validata-error' : 'input-wrapper'}>
-            <input type='text' maxLength='12' ref='userName' placeholder='用户名（5-12位，只能含有数字、字母、下划线）' onChange={this.nameChange} />
-          </div>
-          {userNameIsError ? <div className='validata-info'>{userNameErrorInfo}</div> : null}
+          <QueueAnim delay={300} className='queue-simple'>
+            <div key='1' className={userNameIsError ? 'input-wrapper validata-error' : 'input-wrapper'}>
+              <input type='text' maxLength='12' ref='userName' placeholder='用户名（5-12位，只能含有数字、字母、下划线）' onChange={this.nameChange} />
+            </div>
+            {userNameIsError ? <div className='validata-info'>{userNameErrorInfo}</div> : null}
 
-          <div className={passwordIsError ? 'input-wrapper validata-error' : 'input-wrapper'}>
-            <input type='password' ref='password' placeholder='新账号登录密码（至少6位）' onChange={this.pwdChange} />
-          </div>
-          {passwordIsError ? <div className='validata-info'>{passwordErrorInfo}</div> : null}
+            <div key='2' className={passwordIsError ? 'input-wrapper validata-error' : 'input-wrapper'}>
+              <input type='password' ref='password' placeholder='新账号登录密码（至少6位）' onChange={this.pwdChange} />
+            </div>
+            {passwordIsError ? <div className='validata-info'>{passwordErrorInfo}</div> : null}
 
-          <div className={nickNameIsError ? 'input-wrapper validata-error' : 'input-wrapper'}>
-            <input type='text' ref='nickName' maxLength='20' placeholder='昵称（0-20位）' onChange={this.nickChange} />
-          </div>
-          {nickNameIsError ? <div className='validata-info'>{nickNameErrorInfo}</div> : null}
+            <div key='3' className={nickNameIsError ? 'input-wrapper validata-error' : 'input-wrapper'}>
+              <input type='text' ref='nickName' maxLength='20' placeholder='昵称（0-20位）' onChange={this.nickChange} />
+            </div>
+            {nickNameIsError ? <div className='validata-info'>{nickNameErrorInfo}</div> : null}
 
-          <div className={phoneIsError ? 'input-wrapper validata-error' : 'input-wrapper'}>
-            <input type='text' maxLength='11' ref='phone' placeholder='手机号码' onChange={this.phoneChange} />
-          </div>
-          {phoneIsError ? <div className='validata-info'>{phoneErrorInfo}</div> : null}
+            <div key='4' className={phoneIsError ? 'input-wrapper validata-error' : 'input-wrapper'}>
+              <input type='text' maxLength='11' ref='phone' placeholder='手机号码' onChange={this.phoneChange} />
+            </div>
+            {phoneIsError ? <div className='validata-info'>{phoneErrorInfo}</div> : null}
 
-          <div className={wechatIsEmpty ? 'input-wrapper validata-error' : 'input-wrapper'}>
-            <input type='text' ref='wechat' maxLength='30' placeholder='微信' onChange={this.handleChange} />
-          </div>
-          {wechatIsEmpty ? <div className='validata-info'>微信不能为空！</div> : null}
+            <div key='5' className={wechatIsEmpty ? 'input-wrapper validata-error' : 'input-wrapper'}>
+              <input type='text' ref='wechat' maxLength='30' placeholder='微信' onChange={this.handleChange} />
+            </div>
+            {wechatIsEmpty ? <div className='validata-info'>微信不能为空！</div> : null}
 
-          <div className={alipayIsEmpty ? 'input-wrapper validata-error' : 'input-wrapper'}>
-            <input type='text' ref='alipay' maxLength='30' placeholder='支付宝' onChange={this.handleChange} />
-          </div>
-          {alipayIsEmpty ? <div className='validata-info'>支付宝不能为空！</div> : null}
+            <div key='6' className={alipayIsEmpty ? 'input-wrapper validata-error' : 'input-wrapper'}>
+              <input type='text' ref='alipay' maxLength='30' placeholder='支付宝' onChange={this.handleChange} />
+            </div>
+            {alipayIsEmpty ? <div className='validata-info'>支付宝不能为空！</div> : null}
 
-        </div>
-        <div className='submit-btn'>
-          <button onClick={this.handleSubmit}>确认开发新牧场</button>
+            <div key='7' className='submit-btn'>
+              <button onClick={this.handleSubmit}>确认开发新牧场</button>
+            </div>
+          </QueueAnim>
         </div>
       </div>
     )

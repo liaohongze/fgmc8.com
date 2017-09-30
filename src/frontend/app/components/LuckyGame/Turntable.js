@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import './Turntable.scss'
 
 let ID
@@ -20,7 +20,7 @@ export default class Turntable extends Component {
   }
 
   refreshData = () => {
-    Client.getUser(ID, result => {
+    Client.getUser(ID, auth.getToken(), result => {
       if (!result.errored && this.refs.turntableBox) {
         this.setState({ stock: result.object.stock })
         if (result.object.stock === 0) {
@@ -36,7 +36,7 @@ export default class Turntable extends Component {
     let randomNum = parseInt((Math.random() * (7 - 1) + 1), 10)
     let noBonus = [2, 4, 6, 8, 10, 12]
     if (this.state.stock >= 3) {
-      Client.turntable({ customerId: ID }, result => {
+      Client.turntable({ customerId: ID }, auth.getToken(), result => {
         if (!result.errored && this.refs.turntableBox) {
           resultNum = result.object.level === 0 ? noBonus[randomNum - 1] : result.object.level * 2 - 1
           this.setState({
@@ -64,12 +64,12 @@ export default class Turntable extends Component {
   }
 
   componentWillMount() {
-    ID = auth.getCurrentUser().id
+    ID = currentUser().id
   }
 
   componentDidMount() {
     this.refreshData()
-    Client.getPrizes(result => {
+    Client.getPrizes(auth.getToken(), result => {
       if (!result.errored && this.refs.turntableBox) {
         if (result.object) {
           this.setState({ bonusInfo: result.object })

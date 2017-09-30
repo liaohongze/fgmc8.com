@@ -1,0 +1,41 @@
+.history-dialog-wrapper {
+  .history-dialog-bg {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.6);
+  }
+  .history-dialog {
+    position: fixed;
+    z-index: 5000;
+    width: 100%;
+    max-width: 640px;
+    top: 0;
+    transition: height .3s;
+    background-color: #8bc34a;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 9px;
+    overflow: hidden;
+    .history-content {
+      padding: 5px;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse:collapse;
+      td {
+        border: 1px solid #000;
+        height: 40px;
+        width: 16.666666%;
+      }
+    }
+    .close {
+      text-align: center;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  }
+}

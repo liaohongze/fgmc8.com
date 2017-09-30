@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Panel, Table, Pagination } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import { formatDate } from '../../utils/tools'
 // import './List.scss'
 
@@ -21,7 +22,7 @@ export default class Record extends Component {
 
   refreshData = (page, size) => {
     this.setState({ loading: true })
-    Client.getTurntableReacord(page, size, result => {
+    Client.getTurntableReacord(page, size, auth.getToken(), result => {
       if (!result.errored && this.refs.truntableRecord) {
         this.setState({
           loading: false,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import FontAwesome from 'react-fontawesome'
 import { formatDate } from '../../utils/tools'
 import Toolbar from '../shared/Toolbar'
@@ -20,7 +21,7 @@ export default class Detail extends Component {
   componentDidMount() {
     this.setState({ loading: true })
     const { match: { params: { id } } } = this.props
-    Client.getArticle(id, result => {
+    Client.getArticle(id, auth.getToken(), result => {
       if (!result.errored && this.refs.newsDetailBox) {
         this.setState({
           loading: false,

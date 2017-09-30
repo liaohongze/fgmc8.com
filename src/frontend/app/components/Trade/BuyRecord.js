@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import Toolbar from '../shared/Toolbar'
 import NoMore from '../shared/NoMore'
 import BuyItem from './BuyItem'
@@ -20,7 +20,7 @@ export default class BuyRecord extends Component {
 
   refreshData = (page, size) => {
     this.setState({ loading: true })
-    Client.getBuyRecord(USERNAME, page, size, result => {
+    Client.getBuyRecord(USERNAME, page, size, auth.getToken(), result => {
       if (!result.errored && this.refs.buyRecord) {
         this.setState({
           loading: false,
@@ -41,7 +41,7 @@ export default class BuyRecord extends Component {
   }
 
   componentWillMount() {
-    USERNAME = auth.getCurrentUser().userName
+    USERNAME = currentUser().name
   }
 
   componentDidMount() {

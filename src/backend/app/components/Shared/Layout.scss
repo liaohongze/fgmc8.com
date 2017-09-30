@@ -188,6 +188,16 @@
         .navbar {
             .nav {
                 float: left;
+                .dropdown {
+                    .dropdown-menu {
+                        a {
+                            color: #a5afbb;
+                        }
+                        a:hover {
+                            color: #fff;
+                        }
+                    }
+                }
             }
         }
     }

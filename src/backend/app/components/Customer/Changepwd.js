@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Form, FormGroup, Row, Col, FormControl, ControlLabel, HelpBlock, Button, Panel } from 'react-bootstrap'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import './Changepwd.scss'
 
-let ID = auth.getCurrentUser().id
+let ID
 
 export default class Changepwd extends Component {
   static propTypes = {
@@ -26,12 +26,16 @@ export default class Changepwd extends Component {
         customerId: id,
         password: this.confirmpwd.value
       }
-      Client.resetPassword(values, ID, result => {
+      Client.resetPassword(values, ID, auth.getToken(), result => {
         if (!result.errored) {
           this.props.history.push('/customer')
         }
       })
     }
+  }
+
+  componentWillMount() {
+    ID = currentUser().id
   }
 
   render() {

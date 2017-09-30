@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import {Popover, OverlayTrigger, Button} from 'react-bootstrap'
 import { formatDate } from '../../utils/tools'
 
 export default class ListItem extends React.PureComponent {
@@ -17,6 +18,7 @@ export default class ListItem extends React.PureComponent {
   }
 
   deleteUser = () => {
+    this.refs.delete.click()
     this.props.delete(this.props.user.id)
   }
 
@@ -31,6 +33,11 @@ export default class ListItem extends React.PureComponent {
   render() {
     const { lockoutEnabled } = this.state
     const { user, itemMatch } = this.props
+    const popoverClickRootClose = (
+      <Popover id='popover-trigger-click-root-close' title='确认删除？'>
+        <Button bsStyle='danger' onClick={this.deleteUser}>删除</Button>
+      </Popover>
+    )
     return (
       <tr>
         <td><Link className='user-name-btn' to={`${itemMatch.url}/detail/` + user.id}>{user.userName}</Link></td>
@@ -44,7 +51,9 @@ export default class ListItem extends React.PureComponent {
           <span className={lockoutEnabled ? 'unlock-btn' : 'lock-btn'} onClick={this.lockCustomer}>{lockoutEnabled ? '解锁账号' : '锁定账号'}</span>
           <Link to={`${itemMatch.url}/changepwd/${user.id}`}><span className='changepwd-btn'>修改密码</span></Link>
           <Link to={`${itemMatch.url}/edit/` + user.id}><span className='editToggle-btn'>编辑</span></Link>
-          <span className='delete' onClick={this.deleteUser}>删除</span>
+          <OverlayTrigger trigger='click' rootClose placement='left' overlay={popoverClickRootClose}>
+            <span className='delete' ref='delete'>删除</span>
+          </OverlayTrigger>
         </td>
       </tr>
     )

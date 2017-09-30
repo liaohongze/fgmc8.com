@@ -14,28 +14,10 @@ export default class Login extends Component {
     loginFault: false
   }
 
-  componentDidMount () {
-    this.refs.loginbtn.addEventListener('click', this.handleSubmit)
-
-    // window.addEventListener('keydown', this.handleEnter)
-
-    // 全屏
-    // var docElm = document.documentElement
-    // if (docElm.requestFullscreen) {
-    //   docElm.requestFullscreen()
-    // } else if (docElm.mozRequestFullScreen) {
-    //   docElm.mozRequestFullScreen()
-    // } else if (docElm.webkitRequestFullscreen) {
-    //   docElm.webkitRequestFullscreen()
-    // } else if (docElm.msRequestFullscreen) {
-    //   docElm.msRequestFullscreen()
-    // }
-  }
-
   handleSubmit = () => {
     const userName = this.refs.name.value
     const password = this.refs.pwd.value
-    const values = { 'userName': userName, 'password': password }
+    const values = { 'UserName': userName, 'password': password }
     auth.authenticate(values, result => {
       if (result) {
         this.setState({ loginFault: false, redirectToReferrer: result })
@@ -49,6 +31,21 @@ export default class Login extends Component {
     if (e.keyCode === 13) {
       this.handleSubmit()
     }
+  }
+
+  componentDidMount () {
+    this.refs.loginbtn.addEventListener('click', this.handleSubmit)
+    // 全屏
+    // var docElm = document.documentElement
+    // if (docElm.requestFullscreen) {
+    //   docElm.requestFullscreen()
+    // } else if (docElm.mozRequestFullScreen) {
+    //   docElm.mozRequestFullScreen()
+    // } else if (docElm.webkitRequestFullscreen) {
+    //   docElm.webkitRequestFullscreen()
+    // } else if (docElm.msRequestFullscreen) {
+    //   docElm.msRequestFullscreen()
+    // }
   }
 
   render() {

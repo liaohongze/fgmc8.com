@@ -13,7 +13,7 @@ export default class BuyItem extends PureComponent {
     return (
       <div className='buy-item'>
         <div className='buy-item-header'>
-          <span className='trade-statu'>第{item.pn}期</span>
+          <span className='trade-statu'>第{item.periodNumber}期</span>
           <span className='trade-data'>{formatDate(item.created, 'YYYY-MM-DD HH:mm:ss')}</span>
         </div>
         <div className='buy-item-content'>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import { formatDate } from '../../utils/tools'
 import Toolbar from '../shared/Toolbar'
 import NoMore from '../shared/NoMore'
@@ -17,12 +17,12 @@ export default class Pasture extends Component {
   }
 
   componentWillMount() {
-    ID = auth.getCurrentUser().id
+    ID = currentUser().id
   }
 
   componentDidMount() {
     this.setState({ loading: true })
-    Client.getPastures(ID, result => {
+    Client.getPastures(ID, auth.getToken(), result => {
       if (!result.errored && this.refs.growupBox) {
         this.setState({
           loading: false,

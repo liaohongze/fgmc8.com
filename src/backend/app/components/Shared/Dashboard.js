@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link, Route } from 'react-router-dom'
 import { Nav, Navbar, NavItem, MenuItem, NavDropdown, Glyphicon, Button } from 'react-bootstrap'
 
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import Sildebar from './sidebar/Sidebar'
 import MenuGroup from './sidebar/MenuGroup'
 import SidebarItem from './sidebar/SidebarItem'
@@ -170,7 +170,7 @@ export default class Dashboard extends Component {
           <Navbar.Collapse>
             <Nav>
               <NavItem eventKey={1} href='#'><img className='user-avatar' src={AdminImg} alt='' /></NavItem>
-              <NavDropdown eventKey={2} title={auth.getCurrentUser().userName} id='basic-nav-dropdown'>
+              <NavDropdown eventKey={2} title={currentUser().name} id='basic-nav-dropdown'>
                 <MenuItem eventKey={2.1} href='/home/changepwd'>修改密码</MenuItem>
                 <MenuItem divider />
                 <MenuItem eventKey={2.2} href='/login' onClick={this.logOut}>退出系统</MenuItem>

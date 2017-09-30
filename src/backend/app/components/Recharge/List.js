@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Table, Panel, Pagination, Form, FormGroup, FormControl, Button } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import { formatDate } from '../../utils/tools'
 import './List.scss'
 
@@ -22,7 +23,7 @@ export default class List extends Component {
 
   refleshData = (page, size) => {
     this.setState({ loading: true })
-    Client.getRecharges(page, size, result => {
+    Client.getRecharges(page, size, auth.getToken(), result => {
       if (!result.errored && this.refs.rechargeList) {
         this.setState({
           loading: false,

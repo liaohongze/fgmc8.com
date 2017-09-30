@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Panel, Table, Pagination } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import { formatDate } from '../../utils/tools'
 
 export default class Record extends Component {
@@ -20,7 +21,7 @@ export default class Record extends Component {
 
   refreshData = (page, size) => {
     this.setState({ loading: true })
-    Client.getWillageWithIdles(page, size, result => {
+    Client.getWillageWithIdles(page, size, auth.getToken(), result => {
       if (!result.errored && this.refs.betRecord) {
         this.setState({
           loading: false,
@@ -58,6 +59,8 @@ export default class Record extends Component {
                       <thead>
                         <tr>
                           <th>期数</th>
+                          <th>局数</th>
+                          <th>场数</th>
                           <th>押注</th>
                           <th>开奖</th>
                           <th>赔率</th>
@@ -71,7 +74,9 @@ export default class Record extends Component {
                           recordData.map((item, index) => {
                             return (
                               <tr key={index}>
-                                <td>{item.pn}</td>
+                                <td>{item.periodNumber}</td>
+                                <td>{item.round}</td>
+                                <td>{item.stage}</td>
                                 <td>{item.betName}</td>
                                 <td>{item.openName}</td>
                                 <td>{item.odds}</td>

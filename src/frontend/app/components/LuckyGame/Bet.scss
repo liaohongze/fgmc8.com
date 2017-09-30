@@ -21,15 +21,14 @@
         display: block;
       }
       a,
-      .goback {
+      .goback,
+      .history {
         color: #000;
         border-radius: 15px;
         background-color: #eee;
         opacity: .8;
         padding: 1px 10px 2px;
         cursor: pointer;
-      }
-      .goback {
         padding-right: 20px;
         padding-left: 20px;
       }
@@ -218,11 +217,18 @@
   .weui-dialog__bd {
     font-size: 1rem;
     padding: 1rem;
+    .red-text {
+      color: #F44336;
+    }
+    .result-text {
+      display: block;
+      margin-top: 10px;
+    }
     .result-content {
       padding: 5px;
       padding-bottom: 10px;
-      margin-top: 20px;
-      margin-bottom: 20px;
+      margin-top: 15px;
+      margin-bottom: 15px;
       >div {
         display: flex;
         justify-content: space-between;

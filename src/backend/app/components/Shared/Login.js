@@ -43,7 +43,7 @@ export default class Login extends Component {
       })
     }
     if (userName.length !== 0 && password.length !== 0) {
-      const values = { 'username': userName, 'password': password }
+      const values = { 'UserName': userName, 'password': password }
       auth.authenticate(values, (result) => {
         if (result) {
           if (this.refs.loginBox) { this.setState({ redirectToReferrer: result }) }

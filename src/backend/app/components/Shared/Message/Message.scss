@@ -1,0 +1,29 @@
+.diy-message-container {
+  height: 44px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  .diy-message {
+    max-width: 80%;
+    color: #fff;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 3px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 1001;
+    transition: top .3s;
+  }
+  .success {
+    background-color: #5bc0de;
+  }
+  .warn {
+    background-color: #f0ad4e;
+  }
+  .danger {
+    background-color: #d9534f;
+  }
+}

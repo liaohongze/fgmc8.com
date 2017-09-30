@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
+import { auth, currentUser } from '../../common/Auth'
 import IncomeItem from './IncomeItem'
 import Toolbar from '../shared/Toolbar'
 import NoMore from '../shared/NoMore'
@@ -16,12 +16,12 @@ export default class Incomes extends Component {
   }
 
   componentWillMount() {
-    ID = auth.getCurrentUser().id
+    ID = currentUser().id
   }
 
   componentDidMount() {
     this.setState({ loading: true })
-    Client.getDirects(ID, result => {
+    Client.getDirects(ID, auth.getToken(), result => {
       if (!result.errored && this.refs.incomesBox) {
         this.setState({
           loading: false,

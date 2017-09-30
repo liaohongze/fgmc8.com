@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import { formatDate } from '../../utils/tools'
 import { Table, Panel, Pagination, Form, FormGroup, FormControl, Button } from 'react-bootstrap'
 import './UserTransactions.scss'
@@ -22,9 +23,9 @@ export default class UserTransactions extends Component {
   refreshData = (page, size) => {
     this.setState({ loading: true })
     const { match: { params: { name } } } = this.props
-    Client.getCustomerByName(name, result => {
+    Client.getCustomerByName(name, auth.getToken(), result => {
       if (!result.errored) {
-        Client.getUserTransactions(result.object.id, page, size, transResult => {
+        Client.getUserTransactions(result.object.id, page, size, auth.getToken(), transResult => {
           if (!transResult.errored && this.refs.userTransactionsList) {
             this.setState({
               loading: false,

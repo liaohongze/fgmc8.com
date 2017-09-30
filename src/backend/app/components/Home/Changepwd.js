@@ -1,19 +1,15 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { Form, FormGroup, Row, Col, FormControl, ControlLabel, HelpBlock, Button, Panel } from 'react-bootstrap'
 import Client from '../../common/Client'
-import { auth } from '../../common/Auth'
-import {Message} from 'uxcore'
+import { auth, currentUser } from '../../common/Auth'
+import Message from '../Shared/Message'
 
 let USERNAME, ID
 
 export default class Changepwd extends Component {
-  static propTypes = {
-    match: PropTypes.object
-  }
-
   state = {
-    isConfirmed: true
+    isConfirmed: true,
+    changeSuccess: false
   }
 
   handleSubmit = () => {
@@ -24,17 +20,20 @@ export default class Changepwd extends Component {
         userName: USERNAME,
         password: this.confirmpwd.value
       }
-      Client.changeAdminPwd(values, ID, result => {
+      Client.changeAdminPwd(values, ID, auth.getToken(), result => {
         if (!result.errored && this.refs.changepwdBox) {
-          Message['success']('修改管理员密码成功！')
+          this.setState({changeSuccess: true})
+          this.oldpwd.value = ''
+          this.newpwd.value = ''
+          this.confirmpwd.value = ''
         }
       })
     }
   }
 
   componentWillMount () {
-    USERNAME = auth.getCurrentUser().userName
-    ID = auth.getCurrentUser().id
+    USERNAME = currentUser().name
+    ID = currentUser().id
   }
 
   render() {
@@ -90,6 +89,8 @@ export default class Changepwd extends Component {
             </Row>
           </form>
         </Panel>
+
+        {this.state.changeSuccess ? <Message type='success' content='修改管理员密码成功！' close={() => { this.setState({changeSuccess: false}) }} /> : null}
       </div>
     )
   }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Panel, Table, Pagination } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import ListItem from './ListItem'
 import './List.scss'
 
@@ -21,7 +22,7 @@ export default class List extends Component {
 
   refreshData = (page, size) => {
     this.setState({ loading: true })
-    Client.getWithdraw(page, size, result => {
+    Client.getWithdraw(page, size, auth.getToken(), result => {
       if (!result.errored && this.refs.withdrawRecord) {
         this.setState({
           loading: false,
@@ -39,7 +40,7 @@ export default class List extends Component {
       'status': '提现完成'
     }
 
-    Client.confirmWithdraws(values, result => {
+    Client.confirmWithdraws(values, auth.getToken(), result => {
       let newArr = this.state.withdrawlData.slice()
       newArr[location].status = '提现完成'
       newArr[location].reviewTime = result.object.reviewTime

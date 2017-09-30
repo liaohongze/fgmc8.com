@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Table, Panel } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Client from '../../common/Client'
+import {auth} from '../../common/Auth'
 import { formatDate, getQueryString } from '../../utils/tools'
 import './Raises.scss'
 
@@ -18,7 +19,7 @@ export default class Raises extends Component {
 
   componentDidMount() {
     this.setState({ loading: true })
-    Client.getRaises(getQueryString('id'), result => {
+    Client.getRaises(getQueryString('id'), auth.getToken(), result => {
       if (!result.errored && this.refs.userRaisesList) {
         this.setState({
           loading: false,
