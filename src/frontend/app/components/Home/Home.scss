@@ -8,6 +8,10 @@
         width: 100%;
         flex: 1;
         padding-bottom: 70px;
+        .loading {
+            background-color: #fff;
+            padding-bottom: 10px;
+        }
     }
     .banner {
         background-color: #fff;

@@ -39,7 +39,7 @@ export default class Bet extends Component {
 
   refreshUserInfo = () => {
     Client.getUser(ID, auth.getToken(), result => {
-      if (!result.errored && this.refs.betBox) {
+      if (!result.errored) {
         this.setState({ stock: result.object.stock })
       }
     })
@@ -58,8 +58,7 @@ export default class Bet extends Component {
     this.clearAllTimer()
     // 获取期数
     Client.gamblings(auth.getToken(), result => {
-      // && this.refs.betBox 如果组件卸载了就不执行setState，否则会出现错误
-      if (!result.errored && this.refs.betBox) {
+      if (!result.errored) {
         this.setState({
           gamblings: result.object
         })
@@ -120,7 +119,7 @@ export default class Bet extends Component {
       'number': this.state.betNum
     }
     Client.getWillage(values, auth.getToken(), result => {
-      if (!result.errored && this.refs.betBox) {
+      if (!result.errored) {
         this.setState(() => { return { winBetNumber: result.object.number } })
       } else {
         window.clearInterval(waitTimer)
@@ -136,7 +135,7 @@ export default class Bet extends Component {
       'periodNumber': this.state.gamblings.periodNumber
     }
     Client.getNoBet(values, this.state.gamblings.id, auth.getToken(), result => {
-      if (!result.errored && this.refs.betBox) {
+      if (!result.errored) {
         this.setState(() => { return { winBetNumber: result.object } })
       }
     })
@@ -257,7 +256,7 @@ export default class Bet extends Component {
       historyData
     } = this.state
     return (
-      <div className='guess-game' ref='betBox'>
+      <div className='guess-game'>
         <div className='game-content'>
           <div className='issue'>
             <div className='goback' onClick={gameStatus ? null : this.pageGoBack}>返回</div>

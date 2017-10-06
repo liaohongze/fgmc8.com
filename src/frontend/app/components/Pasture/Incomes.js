@@ -22,7 +22,7 @@ export default class Incomes extends Component {
   componentDidMount() {
     this.setState({ loading: true })
     Client.getDirects(ID, auth.getToken(), result => {
-      if (!result.errored && this.refs.incomesBox) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           incomes: result.object.list
@@ -34,12 +34,12 @@ export default class Incomes extends Component {
   render() {
     const { loading, incomes } = this.state
     return (
-      <div className='incomes toolbar-page' ref='incomesBox'>
+      <div className='incomes toolbar-page'>
         <Toolbar link='/pasture' title='直推收益' />
         <div className='incomes-content toolbar-page-content'>
           {
             loading
-              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='lg' /></div>
+              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='spinner' spin size='lg' /></div>
               : (
                 incomes.length === 0
                   ? <NoMore />

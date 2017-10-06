@@ -25,7 +25,7 @@ export default class List extends Component {
   refleshData = (page, size) => {
     this.setState({ loading: true })
     Client.getCustomers(page, size, auth.getToken(), result => {
-      if (!result.errored && this.refs.usersBox) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           users: result.object.list,
@@ -78,7 +78,7 @@ export default class List extends Component {
     const { loading, users, activePage, totalPage } = this.state
 
     return (
-      <div className='user' ref='usersBox'>
+      <div className='user'>
         <Form inline className='search-bar'>
           <FormGroup>
             <FormControl type='text' placeholder='搜索用户' />

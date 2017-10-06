@@ -21,7 +21,7 @@ export default class BuyRecord extends Component {
   refreshData = (page, size) => {
     this.setState({ loading: true })
     Client.getBuyRecord(USERNAME, page, size, auth.getToken(), result => {
-      if (!result.errored && this.refs.buyRecord) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           totalPage: Math.ceil(result.object.total / this.state.pageSize),
@@ -69,7 +69,7 @@ export default class BuyRecord extends Component {
               )
           }
           {
-            loading ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='lg' /></div> : null
+            loading ? <div className='loading'><FontAwesome className='super-crazy-colors' name='spinner' spin size='lg' /></div> : null
           }
         </div>
       </div>

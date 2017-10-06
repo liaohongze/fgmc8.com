@@ -21,7 +21,7 @@ export default class SellRecord extends Component {
   refreshData = (page, size) => {
     this.setState({ loading: true })
     Client.getSellRecord(USERNAME, page, size, auth.getToken(), result => {
-      if (!result.errored && this.refs.sellRecord) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           record: this.state.record.concat(result.object.list),
@@ -51,7 +51,7 @@ export default class SellRecord extends Component {
     }
 
     Client.transactionsAction(values, auth.getToken(), actionResult => {
-      if (!actionResult.errored && this.refs.sellRecord) {
+      if (!actionResult.errored) {
         this.setState({ record: newArr })
       }
     })
@@ -83,7 +83,7 @@ export default class SellRecord extends Component {
         <div className='trade-sell-record-content toolbar-page-content'>
           {
             loading
-              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='lg' /></div>
+              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='spinner' spin size='lg' /></div>
               : (
                 record.length === 0
                   ? <NoMore />

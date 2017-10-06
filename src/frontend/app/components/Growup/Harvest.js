@@ -23,7 +23,7 @@ export default class Harvest extends Component {
   componentDidMount() {
     this.setState({ loading: true })
     Client.getIncomes(ID, auth.getToken(), result => {
-      if (!result.errored && this.refs.harvestBox) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           record: result.object
@@ -35,12 +35,12 @@ export default class Harvest extends Component {
   render() {
     const { loading, record } = this.state
     return (
-      <div className='harvest growup-record toolbar-page' ref='harvestBox'>
+      <div className='harvest growup-record toolbar-page'>
         <Toolbar link='/growup' title='收获记录' />
         <div className='record-list toolbar-page-content'>
           {
             loading
-              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='lg' /></div>
+              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='spinner' spin size='lg' /></div>
               : (
                 record.length === 0
                   ? <NoMore />

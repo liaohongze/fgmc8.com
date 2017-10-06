@@ -23,7 +23,7 @@ export default class AddBreed extends Component {
   componentDidMount() {
     this.setState({ loading: true })
     Client.getRaises(ID, auth.getToken(), result => {
-      if (!result.errored && this.refs.addBreedBox) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           record: result.object
@@ -35,12 +35,12 @@ export default class AddBreed extends Component {
   render() {
     const { loading, record } = this.state
     return (
-      <div className='addBreed growup-record toolbar-page' ref='addBreedBox'>
+      <div className='addBreed growup-record toolbar-page'>
         <Toolbar link='/growup' title='增养记录' />
         <div className='record-list toolbar-page-content'>
           {
             loading
-              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='lg' /></div>
+              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='spinner' spin size='lg' /></div>
               : (
                 record.length === 0
                   ? <NoMore />

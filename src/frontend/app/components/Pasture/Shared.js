@@ -19,7 +19,7 @@ export default class Shared extends Component {
 
   componentDidMount() {
     Client.getQRCode(USERNAME, auth.getToken(), result => {
-      if (!result.errored && this.refs.sharedBox) {
+      if (!result.errored) {
         this.setState({ qrCode: result.object })
       }
     })
@@ -29,7 +29,7 @@ export default class Shared extends Component {
     const { qrCode } = this.state
     const userName = Base64Encode(USERNAME)
     return (
-      <div className='shared toolbar-page' ref='sharedBox'>
+      <div className='shared toolbar-page'>
         <Toolbar link='/pasture' title='分享给好友' />
         <div className='shared-content toolbar-page-content'>
           <p>推广链接：</p>

@@ -24,7 +24,7 @@ export default class List extends Component {
   refleshData = (page, size) => {
     this.setState({ loading: true })
     Client.getTransactions(page, size, auth.getToken(), result => {
-      if (!result.errored && this.refs.transactionsList) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           data: result.object.list,
@@ -49,7 +49,7 @@ export default class List extends Component {
     const { loading, data, activePage, totalPage } = this.state
 
     return (
-      <div className='transactions-list' ref='transactionsList'>
+      <div className='transactions-list'>
         <Form inline className='search-bar'>
           <FormGroup>
             <FormControl type='text' placeholder='搜索交易' />

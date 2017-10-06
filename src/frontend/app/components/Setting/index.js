@@ -11,15 +11,6 @@ export default class Setting extends Component {
     auth.signout()
   }
 
-  // handleClick = () => {
-  //   let token = window.localStorage.getItem('token')
-  //   let payload = JSON.parse(window.atob(token.split('.')[1]))
-  //   let nowDate = Date.now() / 1000
-  //   console.log(payload.exp)
-  //   console.log(nowDate)
-  //   console.log((payload.exp - nowDate) / 3600)
-  // }
-
   render() {
     return (
       <div className='setting toolbar-page'>
@@ -37,7 +28,6 @@ export default class Setting extends Component {
             <div key='3' className='submit-btn'>
               <Link to='/login' onClick={this.signout}>退出</Link>
             </div>
-            {/* <button onClick={this.handleClick}>获取</button> */}
           </QueueAnim>
         </div>
       </div>

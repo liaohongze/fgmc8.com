@@ -23,7 +23,7 @@ export default class Pasture extends Component {
   componentDidMount() {
     this.setState({ loading: true })
     Client.getPastures(ID, auth.getToken(), result => {
-      if (!result.errored && this.refs.growupBox) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           data: result.object
@@ -35,12 +35,12 @@ export default class Pasture extends Component {
   render() {
     const { loading, data } = this.state
     return (
-      <div className='growup-pasture growup-record toolbar-page' ref='growupBox'>
+      <div className='growup-pasture growup-record toolbar-page'>
         <Toolbar link='/growup' title='开牧场记录' />
         <div className='record-list toolbar-page-content'>
           {
             loading
-              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='lg' /></div>
+              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='spinner' spin size='lg' /></div>
               : (
                 data.length === 0
                   ? <NoMore />

@@ -21,7 +21,7 @@ export default class Turntable extends Component {
 
   refreshData = () => {
     Client.getUser(ID, auth.getToken(), result => {
-      if (!result.errored && this.refs.turntableBox) {
+      if (!result.errored) {
         this.setState({ stock: result.object.stock })
         if (result.object.stock === 0) {
           this.setState({ isClickable: false })
@@ -37,7 +37,7 @@ export default class Turntable extends Component {
     let noBonus = [2, 4, 6, 8, 10, 12]
     if (this.state.stock >= 3) {
       Client.turntable({ customerId: ID }, auth.getToken(), result => {
-        if (!result.errored && this.refs.turntableBox) {
+        if (!result.errored) {
           resultNum = result.object.level === 0 ? noBonus[randomNum - 1] : result.object.level * 2 - 1
           this.setState({
             rotateDeg: 3600 + (resultNum - 1) * 30,
@@ -70,7 +70,7 @@ export default class Turntable extends Component {
   componentDidMount() {
     this.refreshData()
     Client.getPrizes(auth.getToken(), result => {
-      if (!result.errored && this.refs.turntableBox) {
+      if (!result.errored) {
         if (result.object) {
           this.setState({ bonusInfo: result.object })
         }
@@ -88,7 +88,7 @@ export default class Turntable extends Component {
   render() {
     const { stock, rotateDeg, bonusGrade, luckDrawDone, bonusInfo } = this.state
     return (
-      <div className='turntable' ref='turntableBox'>
+      <div className='turntable'>
         <div className='outercont' style={{ height: luckDrawDone ? '0' : '336px' }}>
           <div className='outer-cont'>
             <div className='outer' ref='outer'>

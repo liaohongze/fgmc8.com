@@ -22,7 +22,7 @@ export default class Detail extends Component {
     this.setState({ loading: true })
     const { match: { params: { id } } } = this.props
     Client.getArticle(id, auth.getToken(), result => {
-      if (!result.errored && this.refs.newsDetailBox) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           article: result.object
@@ -35,12 +35,12 @@ export default class Detail extends Component {
     const { loading, article } = this.state
     const { match: { params: { id } } } = this.props
     return (
-      <div className='news-detail toolbar-page' ref='newsDetailBox'>
+      <div className='news-detail toolbar-page'>
         <Toolbar link={id === 'rule' ? '/' : '/news'} title='公告详情' />
         <div className='news-content toolbar-page-content'>
           {
             loading
-              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='lg' /></div>
+              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='spinner' spin size='lg' /></div>
               : (
                 Object.getOwnPropertyNames(article).length === 0
                   ? <NoMore />

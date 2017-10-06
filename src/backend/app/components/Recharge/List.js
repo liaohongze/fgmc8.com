@@ -24,7 +24,7 @@ export default class List extends Component {
   refleshData = (page, size) => {
     this.setState({ loading: true })
     Client.getRecharges(page, size, auth.getToken(), result => {
-      if (!result.errored && this.refs.rechargeList) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           rechargeData: result.object.list,
@@ -50,7 +50,7 @@ export default class List extends Component {
     const { match } = this.props
 
     return (
-      <div className='recharge-list' ref='rechargeList'>
+      <div className='recharge-list'>
         <Form inline className='search-bar'>
           <FormGroup>
             <FormControl type='text' placeholder='搜索记录' />

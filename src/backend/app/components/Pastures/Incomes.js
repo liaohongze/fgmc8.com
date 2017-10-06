@@ -20,7 +20,7 @@ export default class Incomes extends Component {
   componentDidMount() {
     this.setState({ loading: true })
     Client.getIncomes(getQueryString('id'), auth.getToken(), result => {
-      if (!result.errored && this.refs.userIncomesList) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           incomesData: result.object
@@ -33,7 +33,7 @@ export default class Incomes extends Component {
     const { loading, incomesData } = this.state
 
     return (
-      <div className='user-incomes-list' ref='userIncomesList'>
+      <div className='user-incomes-list'>
         <Panel collapsible defaultExpanded header={getQueryString('userName') + '的收获记录'} bsStyle='info'>
           {
             loading

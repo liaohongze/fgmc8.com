@@ -37,7 +37,7 @@ export default class Withdraw extends Component {
         'type': this.refs.channel.value
       }
       Client.withdraws(values, auth.getToken(), result => {
-        if (!result.errored && this.refs.withdrawBox) {
+        if (!result.errored) {
           this.refs.amount.value = null
           this.refs.channel.value = 'select'
           this.setState({ toast: true, toastInfo: '申请成功' })
@@ -83,7 +83,7 @@ export default class Withdraw extends Component {
   render() {
     const { amountIsError, withdrawIsEmpty, amountErrorInfo, toast, toastInfo } = this.state
     return (
-      <div className='withdraw toolbar-page' ref='withdrawBox'>
+      <div className='withdraw toolbar-page'>
         <Toolbar link='/trade' title='提现申请' />
         <div className='withdraw-content toolbar-page-content'>
           <div className={withdrawIsEmpty ? 'input-wrapper validata-error' : 'input-wrapper'}>

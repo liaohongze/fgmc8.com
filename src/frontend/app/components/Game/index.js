@@ -38,12 +38,12 @@ export default class Game extends Component {
 
   componentWillMount() {
     ID = currentUser().id
+    this.setState({ rootWidth: document.getElementById('root').offsetWidth })
   }
 
   componentDidMount() {
     this.refreshData()
     recycTimer = setInterval(this.changeTimerStatus, 1000)
-    if (this.refs.pastureGameBox) { this.setState({ rootWidth: document.getElementById('root').offsetWidth }) }
     window.addEventListener('resize', this.onWindowResize)
   }
 
@@ -62,30 +62,28 @@ export default class Game extends Component {
         array.push(results[1].object[i].coordinate)
         stockTime[parseInt(results[1].object[i].code) - 1] = results[1].object[i].stockingTime
       }
-      if (this.refs.pastureGameBox) {
-        this.setState({
-          pastureInfo: results[1].object,
-          pastureCoordinate: array,
-          userInfo: results[0].object,
-          cowsStatus: !this.state.cowsStatus
-        })
-      }
+      this.setState({
+        pastureInfo: results[1].object,
+        pastureCoordinate: array,
+        userInfo: results[0].object,
+        cowsStatus: !this.state.cowsStatus
+      })
     })
   }
 
   changeTimerStatus = () => {
-    if (this.refs.pastureGameBox) { this.setState({ recycTimeStatus: !this.state.recycTimeStatus }) }
+    this.setState({ recycTimeStatus: !this.state.recycTimeStatus })
   }
 
   onWindowResize = () => {
-    if (this.refs.pastureGameBox) { this.setState({ rootWidth: document.getElementById('root').offsetWidth }) }
+    this.setState({ rootWidth: document.getElementById('root').offsetWidth })
   }
 
   pastureAction = (code, coordinate, price) => {
     // this.state.pastureCoordinate.indexOf(coordinate) === -1 为判断该牧场是否存在
     // 开牧场
     if (this.state.pastureOpenable) {
-      if (this.state.pastureCoordinate.indexOf(coordinate) === -1 && this.refs.pastureGameBox) {
+      if (this.state.pastureCoordinate.indexOf(coordinate) === -1) {
         const values = {
           'name': code + '号牧场',
           'customerId': this.state.userInfo.id,
@@ -133,7 +131,7 @@ export default class Game extends Component {
         'code': code
       }
       Client.stocking(values, auth.getToken(), result => {
-        if (!result.errored && this.refs.pastureGameBox) {
+        if (!result.errored) {
           if (result.object.stockingIssue === 100) {
             this.setState({
               stockingable: false,
@@ -187,7 +185,7 @@ export default class Game extends Component {
         'code': code
       }
       Client.recycle(values, auth.getToken(), result => {
-        if (!result.errored && this.refs.pastureGameBox) {
+        if (!result.errored) {
           if (result.object.recyclingIssue === 100) {
             this.setState({
               recycleable: false,
@@ -220,57 +218,51 @@ export default class Game extends Component {
   }
 
   showCowBox = () => {
-    if (this.refs.pastureGameBox) {
-      this.setState({
-        pastureOpenable: false,
-        recycleable: false,
-        showEquipmentList: false,
-        showCowBoxList: !this.state.showCowBoxList
-      })
-    }
+    this.setState({
+      pastureOpenable: false,
+      recycleable: false,
+      showEquipmentList: false,
+      showCowBoxList: !this.state.showCowBoxList
+    })
   }
 
   showEquipment = () => {
-    if (this.refs.pastureGameBox) {
-      this.setState({
-        pastureOpenable: false,
-        recycleable: false,
-        showCowBoxList: false,
-        showEquipmentList: !this.state.showEquipmentList
-      })
-    }
+    this.setState({
+      pastureOpenable: false,
+      recycleable: false,
+      showCowBoxList: false,
+      showEquipmentList: !this.state.showEquipmentList
+    })
   }
 
   mouseAction = (key) => {
-    if (this.refs.pastureGameBox) {
-      if (key === 'recycle') {
-        this.setState({
-          stockingable: false,
-          recycleable: true,
-          pastureOpenable: false,
-          showCowBoxList: false,
-          showEquipmentList: false,
-          cursorStatus: !this.state.cursorStatus
-        })
-      } else if (key === 'openPasture') {
-        this.setState({
-          stockingable: false,
-          pastureOpenable: true,
-          recycleable: false,
-          showCowBoxList: false,
-          showEquipmentList: false,
-          cursorStatus: !this.state.cursorStatus
-        })
-      } else if (key === 'stocking') {
-        this.setState({
-          stockingable: true,
-          pastureOpenable: false,
-          recycleable: false,
-          showCowBoxList: false,
-          showEquipmentList: false,
-          cursorStatus: !this.state.cursorStatus
-        })
-      }
+    if (key === 'recycle') {
+      this.setState({
+        stockingable: false,
+        recycleable: true,
+        pastureOpenable: false,
+        showCowBoxList: false,
+        showEquipmentList: false,
+        cursorStatus: !this.state.cursorStatus
+      })
+    } else if (key === 'openPasture') {
+      this.setState({
+        stockingable: false,
+        pastureOpenable: true,
+        recycleable: false,
+        showCowBoxList: false,
+        showEquipmentList: false,
+        cursorStatus: !this.state.cursorStatus
+      })
+    } else if (key === 'stocking') {
+      this.setState({
+        stockingable: true,
+        pastureOpenable: false,
+        recycleable: false,
+        showCowBoxList: false,
+        showEquipmentList: false,
+        cursorStatus: !this.state.cursorStatus
+      })
     }
   }
 
@@ -339,7 +331,7 @@ export default class Game extends Component {
       Grade5
     ]
     return (
-      <div className={cursorStatus ? this.cursorStyle() : this.cursorStyle()} ref='pastureGameBox'>
+      <div className={cursorStatus ? this.cursorStyle() : this.cursorStyle()}>
         <div className='userinfo' style={{ height: userInfoHeight }}>
           <div className='upper-part'>
             <div className='avatar'>

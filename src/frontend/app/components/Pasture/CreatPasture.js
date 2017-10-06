@@ -67,7 +67,7 @@ export default class CreatPasture extends Component {
   nameChange = () => {
     const min = 5
     const max = 12
-    if (this.refs.userName.value.length !== 0) {
+    if (this.refs.userName.value) {
       if (this.refs.userName.value.length < min || this.refs.userName.value.length > max) {
         this.setState({ userNameIsError: true, userNameErrorInfo: '用户名长度只能为5-12位！' })
       }
@@ -76,8 +76,8 @@ export default class CreatPasture extends Component {
         this.setState({ userNameIsError: true, userNameErrorInfo: '只能含有数字、字母、下划线！' })
       } else {
         if (this.refs.userName.value.length >= min && this.refs.userName.value.length <= max) {
-          Client.customerExist(this.refs.userName.value, auth.getToken(), result => {
-            if (!result.errored && this.refs.creatPasture) {
+          Client.customerExist(this.refs.userName.value, result => {
+            if (!result.errored) {
               if (result.object) {
                 this.setState({ userNameIsError: true, userNameErrorInfo: '该用户已存在！' })
               } else {
@@ -91,20 +91,20 @@ export default class CreatPasture extends Component {
   }
 
   pwdChange = () => {
-    if (this.refs.password.value.length !== 0) { this.setState({ passwordIsError: false }) }
+    if (this.refs.password.value) { this.setState({ passwordIsError: false }) }
     if (this.refs.password.value.length < 6) { this.setState({ passwordIsError: true, passwordErrorInfo: '密码长度至少6位！' }) }
   }
 
   phoneChange = () => {
-    if (this.refs.phone.value.length !== 0) { this.setState({ phoneIsError: false }) }
+    if (this.refs.phone.value) { this.setState({ phoneIsError: false }) }
     if (this.refs.phone.value.length !== 11) { this.setState({ phoneIsError: true, phoneErrorInfo: '手机号码需要11位！' }) }
     var myreg = /^1[34578]\d{9}$/
     if (!myreg.test(this.refs.phone.value)) {
       this.setState({ phoneIsError: true, phoneErrorInfo: '请输入有效的手机号码！' })
     } else {
       if (this.refs.phone.value.length === 11) {
-        Client.mobileExist(this.refs.phone.value, auth.getToken(), result => {
-          if (!result.errored && this.refs.creatPasture) {
+        Client.mobileExist(this.refs.phone.value, result => {
+          if (!result.errored) {
             if (result.object) {
               this.setState({ phoneIsError: true, phoneErrorInfo: '该手机号码已被注册！' })
             } else {
@@ -117,13 +117,13 @@ export default class CreatPasture extends Component {
   }
 
   nickChange = () => {
-    if (this.refs.nickName.value.length !== 0) {
-      Client.nicknameExist(this.refs.nickName.value, auth.getToken(), result => {
-        if (!result.errored && this.refs.creatPasture) {
+    if (this.refs.nickName.value) {
+      Client.nicknameExist(this.refs.nickName.value, result => {
+        if (!result.errored) {
           if (result.object) {
             this.setState({ nickNameIsError: true, nickNameErrorInfo: '该昵称已被注册！' })
           } else {
-            this.setState({ nickNameIsEmpty: false })
+            this.setState({ nickNameIsError: false })
           }
         }
       })
@@ -131,8 +131,8 @@ export default class CreatPasture extends Component {
   }
 
   handleChange = () => {
-    if (this.refs.wechat.value.length !== 0) { this.setState({ wechatIsEmpty: false }) }
-    if (this.refs.alipay.value.length !== 0) { this.setState({ alipayIsEmpty: false }) }
+    if (this.refs.wechat.value) { this.setState({ wechatIsEmpty: false }) }
+    if (this.refs.alipay.value) { this.setState({ alipayIsEmpty: false }) }
   }
 
   componentWillMount() {
@@ -142,7 +142,7 @@ export default class CreatPasture extends Component {
 
   componentDidMount() {
     Client.getRecommend(USERNAME, auth.getToken(), result => {
-      if (!result.errored && this.refs.creatPasture) {
+      if (!result.errored) {
         this.setState({ recomName: result[0] })
       }
     })

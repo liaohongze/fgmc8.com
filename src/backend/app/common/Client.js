@@ -80,8 +80,8 @@ function lockout(id, values, token, cb) {
 }
 
 // 用户
-function getCustomer(name, token, cb) {
-  return fetch(`/api/customers/${name}`, {
+function getCustomer(id, token, cb) {
+  return fetch(`/api/customers/${id}`, {
     method: 'GET',
     headers: {
       'Authorization': 'Bearer ' + token

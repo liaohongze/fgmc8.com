@@ -21,7 +21,7 @@ export default class WithdrawRecord extends Component {
   refreshData = (page, size) => {
     this.setState({ loading: true })
     Client.withdrawsRecord(ID, page, size, auth.getToken(), result => {
-      if (!result.errored && this.refs.withdrawRecord) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           records: this.state.records.concat(result.object.list),
@@ -65,7 +65,7 @@ export default class WithdrawRecord extends Component {
         <div className='withdraw-record-content toolbar-page-content'>
           {
             loading
-              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='lg' /></div>
+              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='spinner' spin size='lg' /></div>
               : (
                 records.length === 0
                   ? <NoMore />

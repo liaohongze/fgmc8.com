@@ -16,7 +16,7 @@ export default class Rule extends Component {
   componentDidMount () {
     this.setState({loading: true})
     Client.getAbout('guid', auth.getToken(), result => {
-      if (!result.errored && this.refs.ruleBox) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           ruleInfo: result.object
@@ -32,12 +32,12 @@ export default class Rule extends Component {
   render() {
     const {loading, ruleInfo} = this.state
     return (
-      <div className='news-detail toolbar-page' ref='ruleBox'>
+      <div className='news-detail toolbar-page'>
         <Toolbar link='/' title='游戏玩法' />
         <div className='news-content toolbar-page-content'>
           {
             loading
-              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='lg' /></div>
+              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='spinner' spin size='lg' /></div>
               : (
                 !ruleInfo
                   ? <NoMore />

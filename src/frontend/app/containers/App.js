@@ -25,8 +25,6 @@ import Pasture from '../components/Pasture'
 import CreatPasture from '../components/Pasture/CreatPasture'
 import Friends from '../components/Pasture/Friends'
 import Incomes from '../components/Pasture/Incomes'
-import Equipment from '../components/Pasture/Equipment'
-import EquipmentRecord from '../components/Pasture/EquipmentRecord'
 import RechargeRecord from '../components/Pasture/RechargeRecord'
 import Shared from '../components/Pasture/Shared'
 import Recharge from '../components/Pasture/Recharge'
@@ -36,7 +34,6 @@ import Growup from '../components/Growup'
 import Harvest from '../components/Growup/Harvest'
 import PastureRecord from '../components/Growup/Pasture'
 import AddBreed from '../components/Growup/AddBreed'
-import Clearn from '../components/Growup/Clearn'
 
 import Trade from '../components/Trade'
 import Sell from '../components/Trade/Sell'
@@ -99,8 +96,6 @@ class App extends Component {
                     <PrivateRoute location={location} path='/pasture/creatpasture' component={CreatPasture} />
                     <PrivateRoute location={location} path='/pasture/friends' component={Friends} />
                     <PrivateRoute location={location} path='/pasture/incomes' component={Incomes} />
-                    <PrivateRoute location={location} path='/pasture/buyequipment' component={Equipment} />
-                    <PrivateRoute location={location} path='/pasture/equipmentrecord' component={EquipmentRecord} />
                     <PrivateRoute location={location} path='/pasture/recharge' component={Recharge} />
                     <PrivateRoute location={location} path='/pasture/rechargerecord' component={RechargeRecord} />
                     <PrivateRoute location={location} path='/pasture/shared' component={Shared} />
@@ -108,7 +103,6 @@ class App extends Component {
                     <PrivateRoute location={location} path='/growup/harvest' component={Harvest} />
                     <PrivateRoute location={location} path='/growup/pasture' component={PastureRecord} />
                     <PrivateRoute location={location} path='/growup/addbreed' component={AddBreed} />
-                    <PrivateRoute location={location} path='/growup/clearn' component={Clearn} />
                     <PrivateRoute location={location} exact path='/trade' component={Trade} />
                     <PrivateRoute location={location} path='/trade/sell' component={Sell} />
                     <PrivateRoute location={location} path='/trade/sellrecord' component={SellRecord} />

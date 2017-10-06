@@ -16,7 +16,7 @@ export default class Rule extends Component {
   componentDidMount () {
     this.setState({loading: true})
     Client.getAbout('bet', auth.getToken(), result => {
-      if (!result.errored && this.refs.betruleBox) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           ruleInfo: result.object
@@ -32,12 +32,12 @@ export default class Rule extends Component {
   render() {
     const {loading, ruleInfo} = this.state
     return (
-      <div className='betrule-detail toolbar-page' ref='betruleBox'>
+      <div className='betrule-detail toolbar-page'>
         <Toolbar link='/luckygame/zhx' title='游戏说明' />
         <div className='betrule-content toolbar-page-content'>
           {
             loading
-              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='refresh' spin size='lg' /></div>
+              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='spinner' spin size='lg' /></div>
               : (
                 !ruleInfo
                   ? <NoMore />

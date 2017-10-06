@@ -26,7 +26,7 @@ export default class UserTransactions extends Component {
     Client.getCustomerByName(name, auth.getToken(), result => {
       if (!result.errored) {
         Client.getUserTransactions(result.object.id, page, size, auth.getToken(), transResult => {
-          if (!transResult.errored && this.refs.userTransactionsList) {
+          if (!transResult.errored) {
             this.setState({
               loading: false,
               data: transResult.object.list,
@@ -53,7 +53,7 @@ export default class UserTransactions extends Component {
     const { loading, data, activePage, totalPage } = this.state
     const { match: { params: { name } } } = this.props
     return (
-      <div className='user-transactions-list' ref='userTransactionsList'>
+      <div className='user-transactions-list'>
         <Form inline className='search-bar'>
           <FormGroup>
             <FormControl type='text' placeholder='搜索交易' />

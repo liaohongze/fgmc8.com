@@ -11,8 +11,9 @@ let USERNAME, ID
 
 export default class Home extends Component {
   state = {
-    userInfo: {userName: '', nickName: '', stock: '', direct: '', invest: '', income: ''},
-    friends: 0
+    userInfo: {userName: '加载中', nickName: '加载中', stock: '加载中', direct: '加载中', invest: '加载中', income: '加载中'},
+    friends: 0,
+    loading: false
   }
 
   componentWillMount() {
@@ -20,61 +21,74 @@ export default class Home extends Component {
     USERNAME = currentUser().name
   }
 
-  componentDidMount() {
+  componentDidMount () {
+    this.setState({loading: true})
     const userInfo = Client.getUser(ID, auth.getToken(), (result) => { return result })
     const recomUsers = Client.getRecommend(USERNAME, auth.getToken(), (result) => { return result })
     Promise.all([userInfo, recomUsers]).then(results => {
-      if (this.refs.homeBox) {
-        this.setState({
-          userInfo: results[0].object,
-          friends: results[1].object.length
-        })
-      }
+      this.setState({
+        userInfo: results[0].object,
+        friends: results[1].object.length,
+        loading: false
+      })
     })
   }
 
   render() {
-    const { userInfo, friends } = this.state
+    const { userInfo, friends, loading } = this.state
     return (
-      <div className='home' ref='homeBox'>
+      <div className='home'>
         <div className='home-content'>
           <div className='banner'><img src={require('./img/banner.jpg')} alt='' /></div>
-          <div className='list-block media-list'>
-            <ul>
-              <li>
-                <Link to='/user' className='item-link item-content'>
-                  <div className='item-media'>
-                    <img src={require('./img/default_user.gif')} className='avadar' />
-                  </div>
-                  <div className='item-inner'>
-                    <div className='item-title-row'>
-                      <div className='item-title'>{userInfo.userName}（{userInfo.nickName}）</div>
-                      <div className='item-arrow'><FontAwesome className='super-crazy-colors' name='angle-right' size='lg' /></div>
-                    </div>
-                  </div>
-                </Link>
-              </li>
-            </ul>
-          </div>
 
-          <div className='game-data'>
-            <div className='category'>
-              <strong>{userInfo.stock}</strong>
-              <p>仓库</p>
-            </div>
-            <div className='friend'>
-              <strong>{userInfo.direct}({friends})</strong>
-              <p>直推好友</p>
-            </div>
-            <div className='production'>
-              <strong>{userInfo.invest}</strong>
-              <p>生产中</p>
-            </div>
-            <div className='income'>
-              <strong>{userInfo.income}</strong>
-              <p>总收益</p>
-            </div>
-          </div>
+          {
+            loading
+              ? <div className='loading'><FontAwesome className='super-crazy-colors' name='spinner' spin size='lg' /></div>
+              : (
+                <div className='list-block media-list'>
+                  <ul>
+                    <li>
+                      <Link to='/user' className='item-link item-content'>
+                        <div className='item-media'>
+                          <img src={require('./img/default_user.gif')} className='avadar' />
+                        </div>
+                        <div className='item-inner'>
+                          <div className='item-title-row'>
+                            <div className='item-title'>{userInfo.userName}（{userInfo.nickName}）</div>
+                            <div className='item-arrow'><FontAwesome className='super-crazy-colors' name='angle-right' size='lg' /></div>
+                          </div>
+                        </div>
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )
+          }
+
+          {
+            loading
+              ? null
+              : (
+                <div className='game-data'>
+                  <div className='category'>
+                    <strong>{userInfo.stock}</strong>
+                    <p>仓库</p>
+                  </div>
+                  <div className='friend'>
+                    <strong>{userInfo.direct}({friends})</strong>
+                    <p>直推好友</p>
+                  </div>
+                  <div className='production'>
+                    <strong>{userInfo.invest}</strong>
+                    <p>生产中</p>
+                  </div>
+                  <div className='income'>
+                    <strong>{userInfo.income}</strong>
+                    <p>总收益</p>
+                  </div>
+                </div>
+              )
+          }
 
           <div className='application'>
             <p>应用</p>

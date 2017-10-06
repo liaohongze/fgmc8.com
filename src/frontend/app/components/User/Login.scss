@@ -3,16 +3,11 @@
   background: url('./img/login.jpg') no-repeat;
   background-size: 100%;
   overflow: auto;
-  .title {
-    text-align: center;
-    font-size: 2rem;
-    margin-top: 5%;
-  }
   .form-wrapper {
     width: 90%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 35%;
+    margin-top: 62%;
     .rowself {
       font-size: 0;
       margin-top: 10px;
@@ -30,38 +25,34 @@
         font-size: 1rem;
         padding-left: 15px;
         input {
-          border: 1px solid #0F9CD6;
+          border: 0;
+          border-bottom: 1px solid #ddd;
           padding: 4px;
           height: 25px;
           width: 90%;
+          color:#212121;
           font-size: 16px;
           background-color: transparent;
         }
         input:focus{
-          outline-color: #0F9CD6;
+          outline: none;
         }
       }
       .captcha {
-        display: flex;
-        align-items: center;
         input {
           width: 50%;
+          vertical-align:top;
         }
         .captcha-img {
+          vertical-align:top;
           display: inline-block;
+          height: 35px;
           width: 40%;
-          height: 25px;
           text-align: center;
+          img {
+            height: 100%;
+          }
         }
-      }
-    }
-    .error-info {
-      height: 44px;
-      .col-7 {
-        overflow: hidden;
-        font-size: 14px;
-        color: #F44336;
-        transition: height .3s;
       }
     }
     .login-btn {
@@ -69,6 +60,7 @@
       margin-top: 10%;
       img {
         cursor: pointer;
+        outline: none;
       }
     }
   }

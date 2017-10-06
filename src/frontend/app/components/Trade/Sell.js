@@ -54,7 +54,7 @@ export default class Sell extends Component {
   buyerChange = () => {
     if (this.refs.buyer.value.length !== 0) {
       Client.customerExist(this.refs.buyer.value, auth.getToken(), result => {
-        if (!result.errored && this.refs.tradeSellBox) {
+        if (!result.errored) {
           if (result.object) {
             this.setState({ buyerIsError: false })
             if (this.refs.buyer.value === USERNAME) {
@@ -78,7 +78,7 @@ export default class Sell extends Component {
   render() {
     const { amountIsError, amountErrorInfo, buyerIsError, buyerErrorInfo } = this.state
     return (
-      <div className='trade-sell toolbar-page' ref='tradeSellBox'>
+      <div className='trade-sell toolbar-page'>
         <Toolbar link='/trade' title='创建交易' />
         <div className='sell-content toolbar-page-content'>
           <div className={amountIsError ? 'input-wrapper validata-error' : 'input-wrapper'}>

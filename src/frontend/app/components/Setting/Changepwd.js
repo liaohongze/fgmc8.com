@@ -29,7 +29,7 @@ export default class Changepwd extends Component {
       if (this.refs.newpwd.value === this.refs.confirmpwd.value) {
         let values = { 'userName': USERNAME, 'password': this.refs.newpwd.value, 'oldPassword': this.refs.oldpwd.value }
         Client.changePassword(values, ID, auth.getToken(), changepwdResult => {
-          if (!changepwdResult.errored && this.refs.changepwdBox) {
+          if (!changepwdResult.errored) {
             if (changepwdResult.object.passwordResult === 100) {
               this.setState({
                 changeSuccess: true,
@@ -73,7 +73,7 @@ export default class Changepwd extends Component {
   render() {
     const { changeSuccess, changeInfo, oldpwdIsError, oldpwdErrorInfo, newpwdIsEmpty, confirmpwdIsError, confirmpwdErrorInfo } = this.state
     return (
-      <div className='changepwd toolbar-page' ref='changepwdBox'>
+      <div className='changepwd toolbar-page'>
         <Toolbar link='/setting' title='重置登录密码' />
         <div className='changepwd-content toolbar-page-content'>
           <QueueAnim delay={300} className='queue-simple'>

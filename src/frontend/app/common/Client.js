@@ -13,6 +13,24 @@ function login(values, cb) {
     .then(cb)
 }
 
+function getCaptcha(cb) {
+  return fetch(`http://auth.fgmc8.com/captcha`, {
+    method: 'GET'
+  })
+    .then(checkStatus)
+    .then(parseJSON)
+    .then(cb)
+}
+
+function isCaptcha(value, code, cb) {
+  return fetch(`http://auth.fgmc8.com/captcha/${value}?v=${code}`, {
+    method: 'GET'
+  })
+    .then(checkStatus)
+    .then(parseJSON)
+    .then(cb)
+}
+
 function signup(values, token, cb) {
   return fetch(`/api/account/signup`, {
     method: 'POST',
@@ -118,36 +136,27 @@ function editUser(values, id, token, cb) {
 }
 
 // 验证是否存在
-function customerExist(name, token, cb) {
+function customerExist(name, cb) {
   return fetch(`/api/customers/${name}/exist`, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer ' + token
-    }
+    method: 'GET'
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function mobileExist(mobile, token, cb) {
+function mobileExist(mobile, cb) {
   return fetch(`/api/customers/${mobile}/mobile`, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer ' + token
-    }
+    method: 'GET'
   })
     .then(checkStatus)
     .then(parseJSON)
     .then(cb)
 }
 
-function nicknameExist(nickname, token, cb) {
+function nicknameExist(nickname, cb) {
   return fetch(`/api/customers/${nickname}/nickname`, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer ' + token
-    }
+    method: 'GET'
   })
     .then(checkStatus)
     .then(parseJSON)
@@ -498,7 +507,7 @@ function getGamblingsRound(token, cb) {
 
 // 外链获取二维码
 function getQRCode(name, token, cb) {
-  return fetch(`http://pic.redbon.cn/qrcode/${name}`, {
+  return fetch(`http://pic.fgmc8.com/qrcode/${name}`, {
     method: 'GET',
     headers: {
       'Authorization': 'Bearer ' + token
@@ -532,6 +541,8 @@ function parseJSON(response) {
 
 const Client = {
   login,
+  getCaptcha,
+  isCaptcha,
   signup,
   // refreshToken,
   changePassword,

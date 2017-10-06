@@ -24,7 +24,7 @@ export default class List extends Component {
   refleshData = (page, size) => {
     this.setState({ loading: true })
     Client.getPastures(page, size, auth.getToken(), result => {
-      if (!result.errored && this.refs.pasturesList) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           pasturesData: result.object.list,
@@ -49,7 +49,7 @@ export default class List extends Component {
     const { loading, pasturesData, totalPage, activePage } = this.state
 
     return (
-      <div className='pastures-list' ref='pasturesList'>
+      <div className='pastures-list'>
         <Form inline className='search-bar'>
           <FormGroup>
             <FormControl type='text' placeholder='搜索牧场' />

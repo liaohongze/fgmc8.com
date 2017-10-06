@@ -21,7 +21,7 @@ export default class Changepwd extends Component {
         password: this.confirmpwd.value
       }
       Client.changeAdminPwd(values, ID, auth.getToken(), result => {
-        if (!result.errored && this.refs.changepwdBox) {
+        if (!result.errored) {
           this.setState({changeSuccess: true})
           this.oldpwd.value = ''
           this.newpwd.value = ''
@@ -38,7 +38,7 @@ export default class Changepwd extends Component {
 
   render() {
     return (
-      <div className='changepwd-box' ref='changepwdBox'>
+      <div className='changepwd-box'>
         <Panel collapsible defaultExpanded header='修改管理员密码' bsStyle='info'>
           <form>
             <Form componentClass='fieldset' horizontal>

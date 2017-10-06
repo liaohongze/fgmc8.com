@@ -23,7 +23,7 @@ export default class Record extends Component {
   refreshData = (page, size) => {
     this.setState({ loading: true })
     Client.getTurntableReacord(page, size, auth.getToken(), result => {
-      if (!result.errored && this.refs.truntableRecord) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           totalPage: Math.ceil(result.object.total / size),
@@ -47,7 +47,7 @@ export default class Record extends Component {
   render() {
     const { loading, recordData, totalPage, activePage } = this.state
     return (
-      <div className='truntable-record withdraw-record' ref='truntableRecord'>
+      <div className='truntable-record withdraw-record'>
         <Panel collapsible defaultExpanded header='转盘记录' bsStyle='info'>
           {
             loading

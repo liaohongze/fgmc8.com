@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import {Popover, OverlayTrigger, Button} from 'react-bootstrap'
+import { Popover, OverlayTrigger, Button } from 'react-bootstrap'
 import { formatDate } from '../../utils/tools'
 
 export default class ListItem extends React.PureComponent {

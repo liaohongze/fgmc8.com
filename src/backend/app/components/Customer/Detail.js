@@ -20,7 +20,7 @@ export default class Detail extends Component {
     this.setState({ loading: true })
     const { match: { params: { id } } } = this.props
     Client.getCustomer(id, auth.getToken(), result => {
-      if (!result.errored && this.refs.userDetail) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           data: result.object
@@ -66,6 +66,10 @@ export default class Detail extends Component {
                   <tr>
                     <th>牧场</th>
                     <td>{data.invest}</td>
+                  </tr>
+                  <tr>
+                    <th>直推</th>
+                    <td>{data.direct}</td>
                   </tr>
                   <tr>
                     <th>总收益</th>

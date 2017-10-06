@@ -13,17 +13,15 @@ export default class Contact extends Component {
   componentDidMount() {
     this.setState({ loading: true })
     Client.getAbout('wechat', auth.getToken(), result => {
-      if (this.refs.contactBox) {
-        if (!result.errored) {
-          this.setState({
-            loading: false,
-            serverAccount: result.object
-          })
-        } else {
-          this.setState({
-            loading: false
-          })
-        }
+      if (!result.errored) {
+        this.setState({
+          loading: false,
+          serverAccount: result.object
+        })
+      } else {
+        this.setState({
+          loading: false
+        })
       }
     })
   }

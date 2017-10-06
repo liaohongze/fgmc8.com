@@ -20,7 +20,7 @@ export default class UserPastures extends Component {
   componentDidMount() {
     this.setState({ loading: true })
     Client.getUserPastures(getQueryString('id'), auth.getToken(), result => {
-      if (!result.errored && this.refs.userPasturesList) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           pasturesData: result.object
@@ -39,7 +39,7 @@ export default class UserPastures extends Component {
     const { loading, pasturesData } = this.state
 
     return (
-      <div className='user-pastures-list' ref='userPasturesList'>
+      <div className='user-pastures-list'>
         <Panel collapsible defaultExpanded header={getQueryString('userName') + '的牧场'} bsStyle='info'>
           {
             loading

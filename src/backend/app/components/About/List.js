@@ -23,7 +23,7 @@ export default class List extends Component {
   refreshData = (page, size) => {
     this.setState({ loading: true })
     Client.getAbouts(page, size, auth.getToken(), result => {
-      if (!result.errored && this.refs.aboutsBox) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           abouts: result.object.list,
@@ -39,7 +39,7 @@ export default class List extends Component {
 
   deleteAbout = (id) => {
     Client.deleteAbout(id, auth.getToken(), result => {
-      if (!result.errored && this.refs.aboutsBox) {
+      if (!result.errored) {
         this.setState(prevState => {
           return {
             abouts: prevState.abouts.filter(item => item.id !== id)
@@ -63,7 +63,7 @@ export default class List extends Component {
   render() {
     const { loading, abouts, activePage, totalPage } = this.state
     return (
-      <div className='about-list' ref='aboutsBox'>
+      <div className='about-list'>
         <Panel collapsible defaultExpanded header='信息列表' bsStyle='info'>
           {
             loading

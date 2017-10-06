@@ -60,7 +60,7 @@ export default class Promotional extends Component {
         'alipay': this.refs.alipay.value
       }
       Client.signup(values, auth.getToken(), result => {
-        if (!result.errored && this.refs.promotionalBox) {
+        if (!result.errored) {
           this.props.history.push('/login')
         }
       })
@@ -69,19 +69,17 @@ export default class Promotional extends Component {
 
   // 监听输入框
   accountChange = () => {
-    const min = 5
-    const max = 12
-    if (this.refs.account.value.length !== 0) {
-      if (this.refs.account.value.length < min || this.refs.account.value.length > max) {
+    if (this.refs.account.value) {
+      if (this.refs.account.value.length < 5 || this.refs.account.value.length > 12) {
         this.setState({ accountIsError: true, accountErrorInfo: '用户名长度只能为5-12位！' })
       }
       var myreg = /^[A-Za-z0-9_]*$/g
       if (!myreg.test(this.refs.account.value)) {
         this.setState({ accountIsError: true, accountErrorInfo: '只能含有数字、字母、下划线！' })
       } else {
-        if (this.refs.account.value.length >= min && this.refs.account.value.length <= max) {
-          Client.customerExist(this.refs.account.value, auth.getToken(), result => {
-            if (!result.errored && this.refs.promotionalBox) {
+        if (this.refs.account.value.length >= 5 && this.refs.account.value.length <= 12) {
+          Client.customerExist(this.refs.account.value, result => {
+            if (!result.errored) {
               if (result.object) {
                 this.setState({ accountIsError: true, accountErrorInfo: '该用户已存在！' })
               } else {
@@ -95,13 +93,13 @@ export default class Promotional extends Component {
   }
 
   nickChange = () => {
-    if (this.refs.nickname.value.length !== 0) {
-      Client.nicknameExist(this.refs.nickname.value, auth.getToken(), result => {
-        if (!result.errored && this.refs.promotionalBox) {
+    if (this.refs.nickname.value) {
+      Client.nicknameExist(this.refs.nickname.value, result => {
+        if (!result.errored) {
           if (result.object) {
             this.setState({ nicknameIsError: true, nicknameErrorInfo: '该昵称已被使用！' })
           } else {
-            this.setState({ nicknameIsEmpty: false })
+            this.setState({ nicknameIsError: false })
           }
         }
       })
@@ -109,7 +107,7 @@ export default class Promotional extends Component {
   }
 
   phoneChange = () => {
-    if (this.refs.phone.value.length !== 0) { this.setState({ phoneIsError: false }) }
+    if (this.refs.phone.value) { this.setState({ phoneIsError: false }) }
     if (this.refs.phone.value.length !== 11) { this.setState({ phoneIsError: true, phoneErrorInfo: '手机号码需要11位！' }) }
     var myreg = /^1[34578]\d{9}$/
     if (!myreg.test(this.refs.phone.value)) {
@@ -117,7 +115,7 @@ export default class Promotional extends Component {
     } else {
       if (this.refs.phone.value.length === 11) {
         Client.mobileExist(this.refs.phone.value, auth.getToken(), result => {
-          if (!result.errored && this.refs.promotionalBox) {
+          if (!result.errored) {
             if (result.object) {
               this.setState({ phoneIsError: true, phoneErrorInfo: '该手机号码已被注册！' })
             } else {
@@ -130,7 +128,7 @@ export default class Promotional extends Component {
   }
 
   pwdChange = () => {
-    if (this.refs.password.value.length !== 0) { this.setState({ passwordIsError: false }) }
+    if (this.refs.password.value) { this.setState({ passwordIsError: false }) }
     if (this.refs.password.value.length < 6) { this.setState({ passwordIsError: true, passwordErrorInfo: '密码长度至少6位！' }) }
   }
 
@@ -143,8 +141,8 @@ export default class Promotional extends Component {
   }
 
   handleChange = () => {
-    if (this.refs.wechat.value.length !== 0) { this.setState({ wechatIsEmpty: false }) }
-    if (this.refs.alipay.value.length !== 0) { this.setState({ alipayIsEmpty: false }) }
+    if (this.refs.wechat.value) { this.setState({ wechatIsEmpty: false }) }
+    if (this.refs.alipay.value) { this.setState({ alipayIsEmpty: false }) }
   }
 
   componentDidMount() {
@@ -173,7 +171,7 @@ export default class Promotional extends Component {
       alipayIsEmpty
     } = this.state
     return (
-      <div className='promotional-link toolbar-page' ref='promotionalBox'>
+      <div className='promotional-link toolbar-page'>
         <div className='promotional-link-content toolbar-page-content'>
           <div className='input-wrapper'>
             <label htmlFor='recommender'>推荐人：</label>

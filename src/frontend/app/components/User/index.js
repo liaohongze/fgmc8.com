@@ -21,12 +21,10 @@ export default class User extends Component {
   handleSubmit = () => {
     if (this.refs.nickName.value.length !== 0) {
       Client.editUser({ 'nickName': this.refs.nickName.value }, ID, auth.getToken(), result => {
-        if (this.refs.updateuser) {
-          this.setState({ changeSuccess: true })
-          this.state.timer = setTimeout(() => {
-            this.setState({ changeSuccess: false })
-          }, 2000)
-        }
+        this.setState({ changeSuccess: true })
+        this.state.timer = setTimeout(() => {
+          this.setState({ changeSuccess: false })
+        }, 2000)
       })
     }
   }
@@ -34,7 +32,7 @@ export default class User extends Component {
   nickChange = () => {
     if (this.refs.nickName.value.length !== 0) {
       Client.nicknameExist(this.refs.nickName.value, auth.getToken(), result => {
-        if (!result.errored && this.refs.updateuser) {
+        if (!result.errored) {
           if (result.object) {
             this.setState({ nickNameIsError: true, nickNameErrorInfo: '该昵称已被使用！' })
           } else {
@@ -51,7 +49,7 @@ export default class User extends Component {
 
   componentDidMount() {
     Client.getUser(ID, auth.getToken(), (result) => {
-      if (!result.errored && this.refs.updateuser) {
+      if (!result.errored) {
         this.setState({
           userInfo: result.object,
           nickName: result.object.nickName

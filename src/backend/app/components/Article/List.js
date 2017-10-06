@@ -27,7 +27,7 @@ export default class Article extends Component {
   refleshData = (page, size) => {
     this.setState({ loading: true })
     Client.getArticles(page, size, auth.getToken(), result => {
-      if (!result.errored && this.refs.articleBox) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           articles: result.object.list,
@@ -39,7 +39,7 @@ export default class Article extends Component {
 
   deleteArticle = (id) => {
     Client.deleteArticle(id, auth.getToken(), result => {
-      if (!result.errored && this.refs.articleBox) {
+      if (!result.errored) {
         this.setState(prevState => {
           return {
             articles: prevState.articles.filter(item => item.id !== id)
@@ -63,7 +63,7 @@ export default class Article extends Component {
   render() {
     const { loading, articles, activePage, totalPage } = this.state
     return (
-      <div className='article' ref='articleBox'>
+      <div className='article'>
         <Panel collapsible defaultExpanded header='通知列表' bsStyle='info'>
           {
             loading

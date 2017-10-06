@@ -39,7 +39,7 @@ export default class Recharge extends Component {
       }
 
       Client.Recharges(values, auth.getToken(), result => {
-        if (!result.errored && this.refs.rechargeBox) {
+        if (!result.errored) {
           this.props.history.push('/pasture/rechargerecord')
         }
       })
@@ -68,7 +68,7 @@ export default class Recharge extends Component {
   render() {
     const { amountIsError, amountErrorInfo, paymentIsEmpty, nameIsError } = this.state
     return (
-      <div className='recharge toolbar-page' ref='rechargeBox'>
+      <div className='recharge toolbar-page'>
         <Toolbar link='/pasture' title='创建充值' />
         <div className='recharge-content toolbar-page-content'>
           <QueueAnim delay={200} className='queue-simple'>

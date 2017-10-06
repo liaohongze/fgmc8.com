@@ -20,7 +20,7 @@ export default class Raises extends Component {
   componentDidMount() {
     this.setState({ loading: true })
     Client.getRaises(getQueryString('id'), auth.getToken(), result => {
-      if (!result.errored && this.refs.userRaisesList) {
+      if (!result.errored) {
         this.setState({
           loading: false,
           raisesData: result.object
@@ -33,7 +33,7 @@ export default class Raises extends Component {
     const { loading, raisesData } = this.state
 
     return (
-      <div className='user-raises-list' ref='userRaisesList'>
+      <div className='user-raises-list'>
         <Panel collapsible defaultExpanded header={getQueryString('userName') + '的增养记录'} bsStyle='info'>
           {
             loading
